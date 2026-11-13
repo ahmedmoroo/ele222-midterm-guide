@@ -1,0 +1,2043 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>ELE222 Midterm Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400;700&display=swap">
+<style>
+/* Layout: one readable column on a solid page; exam answers sit on lined "answer-sheet" paper, MATLAB output in a dark Command Window strip. */
+:root{
+  --bg:#e9edf1; --surface:#ffffff; --fg:#121c26; --muted:#46535f; --line:#cdd5de;
+  --accent:#0a6a70; --accent-soft:#d6ecec;
+  --paper:#fdfcf6; --rule:#c6d6ea; --margin:#e48a8a; --ink:#16357f; --pencil:#3b4652;
+  --screen-bg:#0f171e; --screen-fg:#cfeccb; --screen-dim:#7fa38a;
+  --def:#1d5bb8; --def-bg:#e4eefb; --tip:#1f7a45; --tip-bg:#e3f3e8; --trap:#a65400; --trap-bg:#fbeedd;
+  --err:#ad231b; --err-bg:#fbe5e3; --mem:#6436a8; --mem-bg:#efe7fa;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-hand:"Kalam","Segoe Print","Comic Sans MS",cursive;
+  --f-mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1217; --surface:#151c23; --fg:#e7edf2; --muted:#a3b2bf; --line:#2a3541;
+  --accent:#5cc9cf; --accent-soft:#163538;
+  --paper:#18202b; --rule:#283a52; --margin:#7d3a3a; --ink:#b8d0ff; --pencil:#c7d0da;
+  --screen-bg:#070b0f; --screen-fg:#bfe8b9; --screen-dim:#6f9479;
+  --def:#8cb8ff; --def-bg:#16243a; --tip:#7fd6a0; --tip-bg:#142a1d; --trap:#ffb769; --trap-bg:#2f2213;
+  --err:#ff8f86; --err-bg:#331816; --mem:#c5a6ff; --mem-bg:#241a38; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1217; --surface:#151c23; --fg:#e7edf2; --muted:#a3b2bf; --line:#2a3541;
+  --accent:#5cc9cf; --accent-soft:#163538;
+  --paper:#18202b; --rule:#283a52; --margin:#7d3a3a; --ink:#b8d0ff; --pencil:#c7d0da;
+  --screen-bg:#070b0f; --screen-fg:#bfe8b9; --screen-dim:#6f9479;
+  --def:#8cb8ff; --def-bg:#16243a; --tip:#7fd6a0; --tip-bg:#142a1d; --trap:#ffb769; --trap-bg:#2f2213;
+  --err:#ff8f86; --err-bg:#331816; --mem:#c5a6ff; --mem-bg:#241a38; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:17px;line-height:1.62;-webkit-text-size-adjust:100%}
+@media (min-width:760px){body{font-size:18px}}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-in{max-width:880px;margin:0 auto;display:flex;align-items:center;gap:10px;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{font-family:var(--f-display);font-weight:800;font-size:1.02rem;letter-spacing:.01em;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{font-weight:600;color:var(--muted);font-size:.8rem;margin-left:6px}
+.btn{font:inherit;font-size:.9rem;font-weight:700;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:40px}
+.btn:hover{border-color:var(--accent)}
+.prog{height:3px;background:var(--accent);width:0;transition:width .1s linear}
+.drawer{position:fixed;inset:0;z-index:40;background:rgba(5,10,15,.45)}
+.drawer nav{position:absolute;top:0;right:0;bottom:0;width:min(360px,88vw);background:var(--surface);overflow-y:auto;padding:calc(16px + env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) 18px;border-left:1px solid var(--line)}
+.drawer nav h2{font-family:var(--f-display);font-size:1.1rem;margin:0 0 8px}
+.drawer ol{list-style:none;margin:0;padding:0}
+.drawer li a{display:block;padding:8px 6px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--fg)}
+.drawer li a:hover{color:var(--accent)}
+.drawer li.sub a{padding-left:20px;font-size:.92em;color:var(--muted)}
+main{max-width:880px;margin:0 auto;padding-block:20px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section.sec{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px clamp(16px,4vw,34px);margin:0 0 22px}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.2}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);margin:.2em 0 .25em;font-weight:800}
+h2{font-size:clamp(1.4rem,4.4vw,1.85rem);margin:.1em 0 .6em;font-weight:800}
+h3{font-size:1.2rem;margin:1.6em 0 .5em}
+h4{font-size:1.02rem;margin:1.2em 0 .4em}
+p,li{max-width:68ch}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0}
+.lede{font-size:1.08em;color:var(--muted)}
+.muted{color:var(--muted)}
+.tbl{overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.93em;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--bg);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.pri{font-weight:700;white-space:nowrap}
+.p3{color:var(--err)} .p2{color:var(--trap)} .p1{color:var(--muted)}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;border:1px solid transparent}
+.box>:first-child{margin-top:0}.box>:last-child{margin-bottom:0}
+.box .bt{display:block;font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.def{background:var(--def-bg);border-color:color-mix(in srgb,var(--def) 30%,transparent)} .def .bt{color:var(--def)}
+.tip{background:var(--tip-bg);border-color:color-mix(in srgb,var(--tip) 30%,transparent)} .tip .bt{color:var(--tip)}
+.trap{background:var(--trap-bg);border-color:color-mix(in srgb,var(--trap) 30%,transparent)} .trap .bt{color:var(--trap)}
+.err{background:var(--err-bg);border-color:color-mix(in srgb,var(--err) 30%,transparent)} .err .bt{color:var(--err)}
+.mem{background:var(--mem-bg);border-color:color-mix(in srgb,var(--mem) 30%,transparent)} .mem .bt{color:var(--mem)}
+.learn{border-left:4px solid var(--accent);padding:6px 0 6px 14px;margin:10px 0 16px}
+.learn ul{margin:.3em 0;padding-left:1.2em}
+.grid2{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid2>*{min-width:0}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.legend span{font-size:.8rem;font-weight:700;padding:3px 9px;border-radius:99px}
+/* code (typed, for reading) */
+pre.code{font-family:var(--f-mono);font-size:.84rem;line-height:1.5;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;margin:10px 0}
+/* question card */
+.card{margin:26px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.card>.q{padding:16px 18px 6px}
+.card .src{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.chip{font-size:.74rem;font-weight:700;letter-spacing:.03em;padding:2px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.chip.hot{background:var(--err-bg);color:var(--err)}
+.card h3{margin:.2em 0 .4em}
+.given{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:8px 0;font-size:.95em}
+.given dt{font-weight:700;color:var(--muted)} .given dd{margin:0;min-width:0}
+.find{font-weight:700}
+.find::before{content:"Find / write: ";color:var(--accent)}
+.answer{padding:12px 18px 16px;border-top:1px dashed var(--line);font-weight:700}
+.answer::before{content:"Answer  ";color:var(--accent);letter-spacing:.06em;font-size:.8rem;text-transform:uppercase}
+/* paper */
+.paper{position:relative;background-color:var(--paper);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule) 31px,var(--rule) 32px);background-position:0 10px;color:var(--ink);font-family:var(--f-hand);font-size:1.06rem;line-height:32px;padding:12px 16px 20px 56px;border-top:1px solid var(--line)}
+.paper::before{content:"";position:absolute;top:0;bottom:0;left:42px;width:2px;background:var(--margin);opacity:.8}
+.paper .mn{position:absolute;left:8px;width:30px;text-align:center;font-weight:700;color:var(--margin)}
+.paper p{margin:0;max-width:none}
+.paper .note{color:var(--pencil);font-size:.92em}
+.paper .note::before{content:"\2190  "}
+.hand{font-family:var(--f-hand);font-size:1.02rem;line-height:32px;margin:0;white-space:pre;overflow-x:auto;color:var(--ink);background:none;padding:0}
+.hand .c{color:var(--pencil);opacity:.85}
+.screen{margin:10px 0 6px;background:var(--screen-bg);color:var(--screen-fg);border-radius:8px;overflow:hidden;line-height:1.45}
+.screen .sh{display:block;font-family:var(--f-body);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--screen-dim);padding:5px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.screen pre{margin:0;padding:10px 12px;font-family:var(--f-mono);font-size:.8rem;overflow-x:auto;white-space:pre}
+.calc{display:grid;grid-template-columns:max-content max-content;column-gap:.4em;overflow-x:auto}
+.calc span:nth-child(odd){text-align:right}
+.boxed{display:inline-block;border:2px solid var(--ink);border-radius:4px;padding:0 8px;line-height:28px;margin:2px 0}
+.u2{text-decoration:underline double}
+/* plots */
+.plot{overflow-x:auto;margin:10px 0;-webkit-overflow-scrolling:touch}
+.plot svg{display:block;min-width:540px;width:100%;height:auto}
+.plot.sm svg{min-width:420px}
+.cap{font-size:.85rem;color:var(--muted);margin:2px 0 10px}
+.swipe{font-size:.75rem;color:var(--muted)}
+@media (min-width:620px){.swipe{display:none}}
+/* details */
+details.yt{border:1px solid var(--line);border-radius:12px;margin:16px 0;background:var(--surface)}
+details.yt>summary{list-style:none;cursor:pointer;padding:12px 16px;font-weight:700}
+details.yt>summary::-webkit-details-marker{display:none}
+details.yt>summary::after{content:"Show answer";float:right;font-size:.8rem;color:var(--accent);border:1px solid var(--accent);border-radius:99px;padding:1px 10px}
+details.yt[open]>summary::after{content:"Hide answer"}
+details.yt .ytq{padding:0 16px 12px}
+.yt-label{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mem);margin-right:6px}
+.navrow{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.navrow a{font-weight:700;text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+.hero{padding:6px 0 4px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.stat{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg)}
+.stat b{display:block;font-family:var(--f-display);font-size:1.5rem}
+.stat span{font-size:.85rem;color:var(--muted)}
+.plan li{margin:6px 0}
+.totop{position:fixed;right:max(16px,calc(env(safe-area-inset-right,0px) + 12px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:15}
+pre.mermaid{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px;overflow-x:auto;text-align:center}
+ul.tight li{margin:3px 0}
+.orig{margin:6px 0 14px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.orig figcaption{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--surface);padding:6px 12px;border-bottom:1px solid var(--line)}
+.orig img{display:block;width:100%;height:auto;max-width:100%}
+.orig img+img{border-top:1px dashed #bbb}
+.card .q>h3+p,.card .q>.given,.card .q>.find{font-size:.95em}
+code,kbd{font-family:var(--f-mono);font-size:.86em;background:transparent;border:0;padding:0;color:var(--accent);overflow-wrap:anywhere}
+.mono{font-family:var(--f-mono);font-size:.85em;white-space:nowrap}
+.memt{background:var(--surface);margin:6px 0 0}
+.memt td:first-child{color:var(--mem);font-weight:600}
+.pmap{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin:10px 0 6px}
+.pmap a{display:block;text-decoration:none;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
+.pmap a:hover{border-color:var(--accent)}
+.pmap b{display:block;color:var(--accent)} .pmap span{font-size:.88rem;color:var(--muted)}
+h3.grp{margin-top:2em;padding-top:.6em;border-top:2px solid var(--line);color:var(--accent)}
+.chip.must{background:var(--mem);color:var(--surface)}
+.lbl{margin:0;padding:12px 18px;background:var(--def-bg);border-top:1px solid var(--line)}
+.lbl .bt{display:block;font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--def);margin-bottom:4px}
+.lbl ol{margin:0;padding-left:1.3em}.lbl li{margin:3px 0}
+.zero{border:2px solid var(--accent);border-radius:12px;padding:14px 18px;margin:12px 0 18px;background:var(--surface)}
+.zero>.bt{display:block;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.zero h4{margin:1em 0 .3em}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="top-in">
+  <div class="brand">ELE222 Midterm Guide<small>Lectures 1–7</small></div>
+  <button class="btn" id="themeBtn" type="button" aria-label="Switch colour theme">Theme: Auto</button>
+  <button class="btn" id="tocBtn" type="button" aria-expanded="false" aria-controls="drawer">Contents</button>
+</div><div class="prog" id="prog"></div></div>
+
+<div class="drawer" id="drawer" hidden><nav aria-label="Contents"><h2>Contents</h2><ol id="tocList"></ol></nav></div>
+
+<main id="top">
+
+<section class="sec hero" id="now">
+  <p class="eyebrow">Computer Applications · ELE222 · Midterm · Lectures 1–7</p>
+  <h1>ELE222 midterm, from zero, in one day</h1>
+  <p class="lede">Read it from top to bottom: one lecture at a time, each with the basics first, then sheet questions, then the real exam questions with full answers.</p>
+  <div class="stats">
+    <div class="stat"><b>7</b><span>lectures, each starting from zero</span></div>
+    <div class="stat"><b>35</b><span>solved questions (16 from exams, 19 from sheets and lectures)</span></div>
+    <div class="stat"><b>8</b><span>marked MUST DO: about 70% of past marks</span></div>
+    <div class="stat"><b>0</b><span>computers in the exam: everything is written on paper</span></div>
+  </div>
+  <div class="box err"><span class="bt">What to do now</span>
+    <ol class="plan">
+      <li>Go through the lectures in order. In each one, read <b>From zero</b> first and trace its small examples by hand.</li>
+      <li>Then study that lecture's cards: look at the printed question, read the answer, read <b>Line by line</b>.</li>
+      <li>For every <span class="chip must">MUST DO</span> card: close the page and write the answer on paper from memory, then compare.</li>
+      <li>Short on time? Do only the MUST DO cards and skip the rest.</li>
+    </ol></div>
+  <div class="box tip"><span class="bt">How to write your answer on paper</span>
+    <ol class="tight">
+      <li><b>Copy the handwritten part of each card.</b> That is your answer sheet: the code, line by line, with <code>%%</code> titles for each part (a, b, c…) like the doctor writes.</li>
+      <li><b>Start every program</b> with <code>clear all</code> and <code>clc</code>. Put <code>;</code> at the end of lines whose result you don't want shown.</li>
+      <li><b>When the question says "write the output"</b>, write the dark box's lines under your code: the variable name, <code>=</code>, then the numbers. Exact spacing doesn't matter; the numbers and the 4 decimals (2.5000) do. Work them out by hand, as in the cards.</li>
+      <li><b>When it says "draw" or "plot"</b>, sketch the graph by hand: label both axes, write the title, mark the key values (peaks, zero crossings, the maximum point). The sketches in the cards show what to draw.</li>
+      <li><b>When it says "draw the flowchart"</b>, use the four shapes: oval start/end, parallelogram input/output, diamond decision, rectangle calculation.</li>
+      <li><b>For circuits</b>, write the equations first (as in cards 2.3, 2.5, 2.6), then the matrix code. It shows the method even if one number is wrong.</li>
+      <li><b>Short answers</b> ("matrix or loop?", "what if terms are doubled?") are 1 mark each: one clear sentence from Part D.</li>
+    </ol></div>
+  <h3>How each card works</h3>
+  <div class="tbl"><table><tbody>
+    <tr><td><span class="chip hot">Mid 2024/25 Q4</span> <span class="chip">Sheet 2 Q8</span> <span class="chip must">MUST DO</span></td><td>Where the question comes from, and whether it is a priority</td></tr>
+    <tr><td><b>The picture</b></td><td>The question exactly as printed in your exam or sheet</td></tr>
+    <tr><td><b>The lined paper</b></td><td>What you write on your answer sheet: working and code</td></tr>
+    <tr><td><b>The dark box</b></td><td>The output, to write under your code when the question asks for it</td></tr>
+    <tr><td><b>Line by line</b></td><td>Why each important line is there</td></tr>
+  </tbody></table></div>
+  <h3>Study plan for today (about 10 hours)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Time</th><th>What</th><th>MUST DO cards</th></tr></thead>
+    <tbody>
+      <tr><td>1:30</td><td>Lecture 1: basics, functions on vectors, matrix statistics, complex numbers</td><td>1.3, 1.4</td></tr>
+      <tr><td>3:00</td><td>Lecture 2: matrices, then circuits (the most-asked topic)</td><td>2.3, 2.5, 2.6</td></tr>
+      <tr><td>1:00</td><td>Lecture 3: plotting (read; sketch one graph)</td><td>—</td></tr>
+      <tr><td>1:15</td><td>Lectures 4 and 5: functions, input, fprintf</td><td>—</td></tr>
+      <tr><td>1:30</td><td>Lecture 6: if, input checking, truth table</td><td>6.3</td></tr>
+      <tr><td>1:30</td><td>Lecture 7: loops, factorial, tracing</td><td>7.3, 7.4</td></tr>
+      <tr><td>0:15</td><td>Final check: the 1-mark theory answers</td><td>—</td></tr>
+    </tbody></table></div>
+  <p class="muted">Lecture 8 (interpolation) is outside "till lecture 7" and is skipped.</p>
+</section>
+<section class="sec" id="files">
+  <p class="eyebrow">Start here</p>
+  <h2>What is in your folder</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>File</th><th>Contains</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td>Lecture 01</td><td>Course outline (13 chapters), MATLAB windows, variables, built-in functions (math, rounding, trig, max/min, mean/median/mode, sum/prod/cumsum, sort/sortrows, rand), complex numbers</td><td>Ch 1</td></tr>
+      <tr><td>Lecture 02 (+ version B)</td><td>Defining matrices, colon, indexing, <code>linspace</code>, <code>.*</code>, <code>meshgrid</code>, special matrices; worked Sheet 1 Q19 (feeder), Sheet 2 Q6 (PV), Q13 (3-phase)</td><td>Ch 2</td></tr>
+      <tr><td>Lecture 03 (+ version B)</td><td>Plotting: plot styles, axis, legend, text, subplot, polar, log plots, bar / pie / hist, plotyy, plot3, mesh / surf; worked Sheet 3 Q1, Q5, Q8, Q10</td><td>Ch 3</td></tr>
+      <tr><td>Lecture 04</td><td>Function M-files, multiple inputs/outputs, toolbox path, subfunctions; worked Sheet 4 Q2–Q3 (sin series)</td><td>Ch 4</td></tr>
+      <tr><td>Lecture 05</td><td>input, disp, num2str, fprintf formats, ginput, debugging; Quiz (Δ→Y); worked Final 17/1/2022 Q4 (3-phase) and Sheet 4 Q6 (two-bus)</td><td>Ch 5</td></tr>
+      <tr><td>Lecture 06</td><td>Relational / logical operators, flowchart shapes, find, if / else / elseif, switch, menu; worked Sheet 6 Q2, Q5, Q9 (gates, decoder)</td><td>Ch 6</td></tr>
+      <tr><td>Lecture 07</td><td>for, while, break / continue, midpoint break, nested loops; worked Sheet 7 Q4, Q10 (PV), Final 11/3/2021 Q5–Q6</td><td>Ch 7</td></tr>
+      <tr><td>Lecture 08</td><td>Interpolation and curve fitting</td><td>Not in your range</td></tr>
+      <tr><td>تطبيقات حاسب … 2021-2022.pdf</td><td>Full scanned course book (291 MB), same chapters as the slides</td><td>Backup only</td></tr>
+      <tr><td>MATLAB Mids.pdf</td><td>5 midterms: 27-12-2020 (model answer), an undated 60-min one, 2023/24, 2024/25 ("Mid Term Matlab 25"), 16-11-2025</td><td>Most important</td></tr>
+      <tr><td>Quiz 2</td><td>Relay operating-time function + plot + tables</td><td>Function practice</td></tr>
+      <tr><td>Finals 20-21 … 23-24</td><td>Whole-course finals; most questions are the same as the midterm ones, plus Simulink</td><td>Extra exam picks</td></tr>
+      <tr><td>Sheets Ch 1, 2, 3, 4&amp;5, 6, 7</td><td>Exercise sheets. Many midterm questions are copied from them word for word</td><td>Core</td></tr>
+    </tbody></table></div>
+  <div class="box def"><span class="bt">About the duplicate versions</span>
+    <ul class="tight">
+      <li><b>Lecture 2 vs version B:</b> the same 34 slides; only the page size differs (version B is 4:3). Its file title says "BEE3133 Electrical Power Systems", which is leftover template metadata. The content is ELE222 Chapter 2. Use either.</li>
+      <li><b>Lecture 3 vs version B:</b> identical except a tiny change on slide 9. Use either.</li>
+      <li><b>Sheet 1 (two copies):</b> same 6 pages of text; the 7-page copy only adds a blank page. Keep either.</li>
+      <li>Nothing in the folder belongs to a different course.</li>
+    </ul></div>
+</section>
+<section class="sec" id="exams">
+  <p class="eyebrow">Start here</p>
+  <h2>What the doctor asks: past-exam analysis</h2>
+  <h3>Format</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Midterm</th><th>Time · marks</th><th>Questions</th></tr></thead>
+    <tbody>
+      <tr><td>27-12-2020</td><td>90 min · 40</td><td>Q1 matrix statistics Fa…Fo [5] · Q2 DC mesh, E2 = 0:0.5:20, function plossfun, table, sketch · Q3 interp1 / polyfit (Lecture 8) · Q4 trace a flowchart for k = 2…6 · Q5 factorial with while check + flowchart</td></tr>
+      <tr><td>Undated (60 min)</td><td>60 min · 25</td><td>Q1 3-phase IbB, VAN [6] + frequency sweep 25–250 Hz [6] · Q2 harmonics across R, L, C with subplot [5] + bar3 of powers [2] · Q3 sin series function [5] + 2 theory points</td></tr>
+      <tr><td>2023/2024</td><td>60 min · 20</td><td>Q1 3-phase (a) [3], (b) 50–25000 Hz [3], (c) subplot of 4 variables [3] · Q2 harmonics [4] + bar3 [2] · Q3 sin series [3] + theory [2]</td></tr>
+      <tr><td>2024/25 ("Mid Term Matlab 25")</td><td>—</td><td>Q1 factorial of a vector, input checking, exact output shown · Q2 draw a transmission-line layout [7] · Q3 matrix statistics [5] · Q4 DC mesh with E2 sweep + plossfun</td></tr>
+      <tr><td>16-11-2025 (newest)</td><td>60 min · 40</td><td>Q1 complex numbers (Sheet 1 Q18) · Q2 houses: demand, S, Q, θ, rand, sortrows, bar, 24-h curve · Q3 AC nodal analysis (Sheet 2 Q14) · Q4 truth table of F = xy + xy' + y'z with input checking · Q5 function powerCircuit with if / elseif</td></tr>
+    </tbody></table></div>
+  <div class="box tip"><span class="bt">The pattern</span>
+    <ul class="tight">
+      <li>Every question says <b>"Write a MATLAB M-file"</b>. There are no pure-theory questions, only 1-mark side questions ("matrix or loop, why?", "what if terms are doubled?").</li>
+      <li>Most questions are <b>sheet questions copied word for word</b>. The newest midterm took Sheet 1 Q18, Sheet 2 Q14 and Sheet 6 Q8.</li>
+      <li>Often you must also <b>write the output as it appears in the Command Window</b>. Practise exact formatting (see card 1.3, card 1.4).</li>
+      <li>Expect 4–5 questions in 60–90 minutes. Write short, clean code with <code>%%</code> section comments, as the doctor does.</li>
+    </ul></div>
+  <h3>Priority map</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Topic</th><th>Lecture</th><th>Sheet</th><th>How it appeared</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td>Circuit solved with matrices: DC mesh / branch, AC nodal, 3-phase mesh, parameter sweep</td><td>L2 (+L5, L7)</td><td>S2 Q8–14, S7 Q11–12</td><td>In all 5 midterms and every final</td><td class="pri p3">★★★</td></tr>
+      <tr><td>Function M-file (main + function), input / disp / fprintf tables</td><td>L4, L5</td><td>S4&amp;5</td><td>plossfun (2020, 2024/25), sin series (2 mids), powerCircuit (2025)</td><td class="pri p3">★★★</td></tr>
+      <tr><td>if / elseif, logical operators, input checking, truth tables</td><td>L6</td><td>S6 Q2–9</td><td>Truth table (2025), checks in factorial (2020, 2024/25)</td><td class="pri p3">★★★</td></tr>
+      <tr><td>for / while loops, counters, factorial, flowchart reading and tracing</td><td>L7</td><td>S7</td><td>2020 Q4, Q5; 2024/25 Q1</td><td class="pri p3">★★★</td></tr>
+      <tr><td>max / min / mean / median / mode / sort / sortrows with exact output</td><td>L1</td><td>S1 Q12–16</td><td>2020 Q1, 2024/25 Q3</td><td class="pri p3">★★★</td></tr>
+      <tr><td>Complex numbers: abs, angle, conj, ', real, imag</td><td>L1</td><td>S1 Q18</td><td>2025 Q1; needed in every AC circuit</td><td class="pri p3">★★★</td></tr>
+      <tr><td>Plotting: styles, subplot, legend, bar / bar3, plot + text drawings</td><td>L3</td><td>S3</td><td>Harmonics (2 mids), subplot (2023/24), drawing (2024/25), bar (2025)</td><td class="pri p2">★★</td></tr>
+      <tr><td>Harmonic waveforms across R / L / C, odd-harmonic symmetry</td><td>L3</td><td>S3 Q5–9</td><td>Two older midterms</td><td class="pri p2">★★</td></tr>
+      <tr><td>Feeder loading (S, pf, CB rating, sortrows), houses / demand</td><td>L2</td><td>S1 Q19</td><td>2025 Q2 (houses), final 2024</td><td class="pri p2">★★</td></tr>
+      <tr><td>PV I-V data, maximum power point with max / loops</td><td>L2, L3, L7</td><td>S2 Q6–7, S3 Q10, S7 Q9–10</td><td>Not in a midterm yet</td><td class="pri p2">★★</td></tr>
+      <tr><td>Desktop windows, diary, variable-name rules</td><td>L1</td><td>S1 Q1–6</td><td>Never asked</td><td class="pri p1">★</td></tr>
+      <tr><td>Interpolation, polyfit</td><td>L8</td><td>—</td><td>2020 only; outside your range</td><td class="pri p1">skip</td></tr>
+    </tbody></table></div>
+  <p class="muted">Use this as a guide, not a promise. Past exams show habits; the doctor can still write a new question on any lecture topic.</p>
+</section>
+<section class="sec" id="big">
+  <p class="eyebrow">Start here</p>
+  <h2>The big picture</h2>
+  <p>This course teaches MATLAB as an engineer's calculator and plotter. Almost every exam question is an electrical problem (a circuit, a feeder, a PV panel, a logic gate) that you must turn into a short program: <b>enter the data → compute with matrices or loops → show the results with fprintf / plots</b>.</p>
+  <div class="legend">
+    <span class="def" style="color:var(--def)">Blue = definition</span>
+    <span class="tip" style="color:var(--tip)">Green = tip</span>
+    <span class="trap" style="color:var(--trap)">Orange = exam trap</span>
+    <span class="err" style="color:var(--err)">Red = common mistake</span>
+    <span class="mem" style="color:var(--mem)">Purple = memorise</span>
+  </div>
+  <h3>Lecture → exam question</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Lecture</th><th>Skill</th><th>Typical question</th></tr></thead>
+    <tbody>
+      <tr><td>L1 Introduction</td><td>Built-in functions, complex numbers</td><td>"Find max of each column and the row where it occurs… write the output"</td></tr>
+      <tr><td>L2 Matrices</td><td>Building and indexing matrices, solving <code>A*I = B</code></td><td>"Find the current in R3 using mesh analysis"</td></tr>
+      <tr><td>L3 Plotting</td><td>plot, subplot, styles, bar, bar3</td><td>"Draw v and i for R, L, C using subplot"</td></tr>
+      <tr><td>L4 Functions</td><td><code>function out = name(in)</code></td><td>"Losses must be calculated in plossfun.m"</td></tr>
+      <tr><td>L5 Input / output</td><td>input, disp, fprintf</td><td>"Print a table using disp and fprintf"</td></tr>
+      <tr><td>L6 Selection</td><td>if / elseif / else, switch, find, &amp; |</td><td>"If the user enters a value not 1 or 0, warn and re-enter"</td></tr>
+      <tr><td>L7 Loops</td><td>for, while, break</td><td>"Vary E2 from 0 to 20 in steps of 0.5 and find when I1 = 0"</td></tr>
+    </tbody></table></div>
+  <h3>Glossary of symbols and commands</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Write</th><th>Meaning</th><th>Example → result</th></tr></thead>
+    <tbody>
+      <tr><td><code>;</code></td><td>End of statement, hides the output</td><td><code>x=5;</code> prints nothing</td></tr>
+      <tr><td><code>%</code>, <code>%%</code></td><td>Comment; <code>%%</code> starts a code section</td><td><code>%% Q1_a</code></td></tr>
+      <tr><td><code>clear all</code>, <code>clc</code></td><td>Delete all variables; clear the Command Window</td><td>first two lines of every answer</td></tr>
+      <tr><td><code>a:s:b</code></td><td>Row from a to b in steps of s</td><td><code>0:0.5:2</code> → 0 0.5 1 1.5 2</td></tr>
+      <tr><td><code>linspace(a,b,n)</code></td><td>n evenly spaced points</td><td><code>linspace(300,3000,20)</code></td></tr>
+      <tr><td><code>A(r,c)</code>, <code>A(:,c)</code>, <code>A(r,:)</code>, <code>A(k)</code>, <code>A(:)</code></td><td>Element; column; row; k-th element counting down columns; everything as one column</td><td><code>M(8)</code> of a 3×5 M is row 2, column 3</td></tr>
+      <tr><td><code>'</code> and <code>.'</code></td><td>Conjugate transpose; plain transpose</td><td><code>(1+2i)'</code> → 1 − 2i</td></tr>
+      <tr><td><code>*</code> vs <code>.*</code>, <code>^</code> vs <code>.^</code>, <code>/</code> vs <code>./</code></td><td>Matrix operation vs element-by-element</td><td><code>[1 2].*[3 4]</code> → 3 8</td></tr>
+      <tr><td><code>inv(A)*B</code>, <code>A^-1*B</code>, <code>A\B</code></td><td>Solve the system A·X = B</td><td>mesh / nodal currents</td></tr>
+      <tr><td><code>size</code>, <code>length</code></td><td>[rows, cols]; the larger dimension</td><td><code>length(ones(3,5))</code> → 5</td></tr>
+      <tr><td><code>max</code>, <code>min</code></td><td>Largest / smallest of each column; <code>[v,k]=max(x)</code> also gives the position</td><td>see card 1.3</td></tr>
+      <tr><td><code>mean</code>, <code>median</code>, <code>mode</code></td><td>Average, middle value, most frequent (smallest if none repeat), each column</td><td>see card 1.3</td></tr>
+      <tr><td><code>sum</code>, <code>prod</code>, <code>cumsum</code>, <code>cumprod</code></td><td>Totals / running totals, each column</td><td><code>cumsum([1 5 3])</code> → 1 6 9</td></tr>
+      <tr><td><code>sort</code>, <code>sortrows(x,n)</code></td><td>Sort each column; sort whole rows by column n</td><td><code>sort(x,'descend')</code></td></tr>
+      <tr><td><code>rand</code>, <code>randn</code></td><td>Uniform 0–1; normal (mean 0, variance 1)</td><td><code>0.8+0.4*rand(1,3)</code> → between 0.8 and 1.2</td></tr>
+      <tr><td><code>abs</code>, <code>angle</code>, <code>conj</code>, <code>real</code>, <code>imag</code></td><td>Magnitude, angle (rad), conjugate, parts of a complex number</td><td>see card 1.4</td></tr>
+      <tr><td><code>sind</code>, <code>cosd</code>, <code>atand</code>, <code>acosd</code></td><td>Trig in degrees</td><td><code>120*(cosd(60)+j*sind(60))</code> = 120∠60°</td></tr>
+      <tr><td><code>round</code>, <code>fix</code>, <code>floor</code>, <code>ceil</code>, <code>rem</code></td><td>Nearest; toward 0; down; up; remainder</td><td><code>fix(-8.6)</code> → −8, <code>floor(-8.6)</code> → −9</td></tr>
+      <tr><td><code>find(cond)</code></td><td>Positions where the condition is true</td><td><code>find([8 11 9]&gt;=10)</code> → 2</td></tr>
+      <tr><td><code>&amp; | ~</code>, <code>&amp;&amp; ||</code>, <code>xor</code></td><td>AND, OR, NOT (element-wise); scalar short-circuit versions; exclusive OR</td><td><code>~xor(a,b)</code> = XNOR</td></tr>
+      <tr><td><code>== ~= &lt; &lt;= &gt; &gt;=</code></td><td>Comparisons, give 1 (true) or 0 (false)</td><td><code>5&lt;1</code> → 0</td></tr>
+      <tr><td><code>input('txt')</code>, <code>input('txt','s')</code></td><td>Ask for a number / matrix; ask for text</td><td><code>R=input('Enter R = ');</code></td></tr>
+      <tr><td><code>disp(x)</code>, <code>num2str</code></td><td>Show a value or text; number → text</td><td><code>disp(['P = ' num2str(P)])</code></td></tr>
+      <tr><td><code>fprintf('%8.2f\n',x)</code></td><td>Formatted print: width 8, 2 decimals, new line</td><td>see Lecture 5</td></tr>
+      <tr><td><code>return</code>, <code>break</code>, <code>continue</code></td><td>Stop the program; leave the loop; skip to the next pass</td><td>input checking</td></tr>
+      <tr><td><code>j</code> or <code>i</code></td><td>√−1 (don't use them as loop counters in AC problems)</td><td><code>zL = j*2*pi*f*L</code></td></tr>
+    </tbody></table></div>
+  <div class="box def"><span class="bt">Electrical symbols used in the exams</span>
+    <p><b>Z</b> impedance = R + jX. <b>X<sub>L</sub> = ωL = 2πfL</b>, <b>X<sub>C</sub> = 1/(ωC)</b>. <b>S = P + jQ</b>, |S| in VA. <b>pf = cos θ = P/|S|</b>. 3-phase line current <b>I = S / (√3·V<sub>line</sub>)</b>. Power in a resistor <b>P = I²R</b>; for a sine of peak V<sub>m</sub> across R, <b>P = V<sub>m</sub>²/(2R)</b>.</p></div>
+</section>
+<section class="sec" id="l1">
+<p class="eyebrow">Lecture 1 · Introduction to MATLAB</p>
+<h2>Lecture 1: your first MATLAB lines</h2>
+<div class="learn"><b>In this lecture</b><ul><li>How a MATLAB program is written and read</li><li>Variables, vectors and matrices</li><li>Built-in functions (sqrt, max, mean, sort…)</li><li>Complex numbers</li></ul><p class="muted">Order: basics → 2 sheet questions → 2 exam questions (both must-do).</p></div>
+<div class="zero"><span class="bt">From zero · what MATLAB is and how a program reads</span>
+<p><b>MATLAB is a calculator that understands whole tables of numbers.</b> You type instructions; MATLAB runs them <b>one line at a time, from top to bottom</b>, and shows the result.</p>
+<p>A <b>program</b> (an <b>M-file</b>, because the file ends in <code>.m</code>) is just a list of these lines saved in a file. In the exam, "write a MATLAB M-file" means: write the lines on paper.</p>
+<h4>The 5 rules you need first</h4>
+<ol>
+<li><b>A variable is a named box.</b> <code>a = 5 + 2</code> means "compute 5 + 2 and store it in a box called a". The <code>=</code> means "store", not "is equal".</li>
+<li><b>MATLAB prints what you store</b>, as the name, then <code>=</code>, then the value on the next line. Put a <b>semicolon</b> <code>;</code> at the end to store silently.</li>
+<li><b>Square brackets make a list.</b> <code>[1 2 3]</code> is a row (a vector). A semicolon inside brackets starts a new row: <code>[1 2 3; 4 5 6]</code> is a table (a matrix) with 2 rows and 3 columns.</li>
+<li><b>Functions are written name(input).</b> <code>sqrt(9)</code> gives 3. <code>max(x)</code> gives the largest value in x.</li>
+<li><b>A % starts a comment</b>: MATLAB ignores the rest of the line. <code>%%</code> starts a titled part of the program (part a, part b…).</li>
+</ol>
+<h4>Trace these by hand (cover the right column, then check)</h4><div class="tbl"><table><thead><tr><th>You write</th><th>MATLAB shows</th></tr></thead><tbody><tr><td><span class="mono">a = 5 + 2</span></td><td><span class="mono">a =<br>&nbsp;&nbsp;&nbsp;&nbsp;7</span></td></tr><tr><td><span class="mono">b = 5*2;</span></td><td><span class="mono">(nothing: the ; hides it)</span></td></tr><tr><td><span class="mono">B = 3 + 2*(4+3)</span></td><td><span class="mono">B =<br>&nbsp;&nbsp;&nbsp;&nbsp;17 (brackets first, then ×, then +)</span></td></tr><tr><td><span class="mono">x = [4 1 3]</span></td><td><span class="mono">x =<br>&nbsp;&nbsp;&nbsp;&nbsp;4 &nbsp;&nbsp;1 &nbsp;&nbsp;3</span></td></tr><tr><td><span class="mono">max(x)</span></td><td><span class="mono">ans =<br>&nbsp;&nbsp;&nbsp;&nbsp;4 (no name given, so MATLAB calls it ans)</span></td></tr><tr><td><span class="mono">sort(x)</span></td><td><span class="mono">ans =<br>&nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;3 &nbsp;&nbsp;4</span></td></tr></tbody></table></div>
+<h4>The one rule for tables: functions work down each column</h4>
+<p>Give <code>max</code>, <code>mean</code>, <code>sort</code>… a table and they answer <b>once per column</b>. To work on rows instead, turn the table on its side first with <code>'</code> (transpose): rows become columns.</p>
+<div class="tbl"><table><thead><tr><th>You write</th><th>Result</th></tr></thead><tbody><tr><td><span class="mono">x = [1 5; 3 2]</span></td><td><span class="mono">x =<br>1 &nbsp;5<br>3 &nbsp;2</span></td></tr><tr><td><span class="mono">max(x)</span></td><td><span class="mono">3 &nbsp;5 (column 1: max of 1,3 · column 2: max of 5,2)</span></td></tr><tr><td><span class="mono">max(x')</span></td><td><span class="mono">5 &nbsp;3 (row 1: max of 1,5 · row 2: max of 3,2)</span></td></tr><tr><td><span class="mono">max(max(x))</span></td><td><span class="mono">5 (the max of the column maxima)</span></td></tr></tbody></table></div></div><article class="card" id="n1">
+<div class="q"><div class="src"><span class="chip">Sheet 1 Q1</span><span class="chip">Lecture 1 Exercise 1-1</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 1 Q1)</figcaption><img src="guide-img/n_s1q1.jpg" alt="As it appears in the sheet (Sheet 1 Q1)" loading="lazy"></figure>
+<h3>1.1 · Type expressions and read the answers</h3>
+<p>Warm-up: what does MATLAB show for each line?</p>
+</div>
+<div class="paper"><span class="mn">1.1</span>
+<pre class="hand">a=5+2            <span class="c">% 7</span>
+b=5*2            <span class="c">% 10</span>
+A=5/2            <span class="c">% 2.5000   (a and A are different boxes: capitals matter)</span>
+B=3+2*(4+3)      <span class="c">% 17</span>
+x1=2.54*8/2.6    <span class="c">% 7.8154</span>
+Y=6.3-2.1045     <span class="c">% 4.1955</span>
+f1=3.6^2         <span class="c">% 12.9600  (^ means power)</span>
+f2=1+2^2         <span class="c">% 5        (power before +)</span>
+f3=sqrt(5)       <span class="c">% 2.2361</span>
+f4=cos(pi)       <span class="c">% -1       (angles in radians, pi = 3.1416)</span>
+D=[1,2,3]        <span class="c">% 1 2 3    (a row)</span>
+K=[1,2,3;1,2,3]  <span class="c">% two rows: 1 2 3 / 1 2 3</span></pre>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li>Order of operations is the same as in maths: brackets, then <code>^</code>, then <code>* /</code>, then <code>+ -</code>.</li><li>Every line without <code>;</code> prints its name and value.</li><li><code>a</code> and <code>A</code> are two different variables: MATLAB is case-sensitive.</li></ol></div>
+<div class="answer">Whole numbers print plainly (7); any result with decimals prints with 4 decimals (2.5000).</div>
+</article>
+<article class="card" id="n2">
+<div class="q"><div class="src"><span class="chip">Sheet 1 Q8–11</span><span class="chip hot">Final 2024 Q1 (same question)</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 1 Q7–11)</figcaption><img src="guide-img/n_s1q8.jpg" alt="As it appears in the sheet (Sheet 1 Q7–11)" loading="lazy"></figure>
+<h3>1.2 · Built-in functions on a vector</h3>
+<p>Make the vector x = −9, −6, …, 12 and apply the basic math functions to it; also square roots of −3 and simple trig.</p>
+<p class="find">x/2, rem(x,2), eˣ, ln x, log10 x, sign x, √−3, trig values</p>
+</div>
+<div class="paper"><span class="mn">1.2</span>
+<pre class="hand">%% Q8
+x=-2:1:2           <span class="c">% -2 -1 0 1 2   (start : step : end)</span>
+abs(x)             <span class="c">%  2  1 0 1 2</span>
+sqrt(x)            <span class="c">% complex for negatives: 0+1.4142i ...</span>
+size(x)            <span class="c">% 1 5   (1 row, 5 columns)</span>
+%% Q9
+sqrt(-3)           <span class="c">% 0 + 1.7321i</span>
+nthroot(-3,2)      <span class="c">% ERROR: even root of a negative number</span>
+(-3)^(1/2)         <span class="c">% 0.0000 + 1.7321i</span>
+%% Q10
+x=-9:3:12;
+a=x/2              <span class="c">% -4.5 -3 -1.5 0 1.5 3 4.5 6</span>
+b=rem(x,2)         <span class="c">% -1 0 -1 0 1 0 1 0   (remainder keeps the sign of x)</span>
+c=exp(x)           <span class="c">% e^x for each element</span>
+d=log(x)           <span class="c">% natural log: complex for x&lt;0, -Inf at 0</span>
+e=log10(x)         <span class="c">% log base 10: same remarks</span>
+f=sign(x)          <span class="c">% -1 -1 -1 0 1 1 1 1  -> positive where 1</span>
+%% Q11
+sin(2*3*pi)        <span class="c">% -7.3479e-16  (this is 0, tiny rounding error)</span>
+theta=0:0.2*pi:2*pi; cos(theta)
+asin(1)            <span class="c">% 1.5708 rad (= 90 degrees)</span>
+cos(45*pi/180)     <span class="c">% 0.7071   convert degrees to radians first</span>
+cosd(45)           <span class="c">% 0.7071   or use the d-version</span>
+asin(0.5)          <span class="c">% 0.5236 -> radians (30 degrees); asind(0.5) gives 30</span></pre>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li><code>-9:3:12</code> builds the list from −9 to 12 in steps of 3 (8 numbers).</li><li><code>x/2</code> divides every element (dividing by a single number needs no dot).</li><li><code>rem(x,2)</code> is the remainder after dividing by 2: 0 for even numbers.</li><li>Logs of negative numbers are complex in MATLAB, and log(0) = −Inf: that is the "explain your results" part.</li><li><code>nthroot</code> refuses even roots of negatives; <code>sqrt</code> and <code>^(1/2)</code> give the complex answer 1.7321i.</li></ol></div>
+<div class="answer">sign(x) = 1 marks the positive elements: the last 4 (3, 6, 9, 12). sin, cos, asin work in radians; sind, cosd, asind in degrees.</div>
+</article>
+<article class="card" id="s4">
+    <div class="q">
+      <div class="src"><span class="chip must">MUST DO</span><span class="chip hot">Mid 2020 Q1 [5]</span><span class="chip hot">Mid 2024/25 Q3 [5]</span><span class="chip">Sheet 1 Q12–14</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 2024/25 Q3)</figcaption><img src="guide-img/c1.jpg" alt="Mid 2024/25 Q3 as printed" loading="lazy"></figure>
+      <h3>1.3 · Matrix statistics with exact output</h3>
+      <p>Write one M-file that finds the maxima, means, medians, mode and sorted versions of the matrix, then write each result as it appears in the Command Window.</p>
+      <dl class="given"><dt>Given</dt><dd>x = [4 90 85 75; 2 55 65 75; 3 78 82 79; 1 84 92 93]. Use variables Fa…Fo, no input/disp/fprintf.</dd></dl>
+      <p class="find">max per column + its row; max per row + its column; overall max; mean / median per column and row; mode; overall mean; sort up / down; sortrows; sortrows by column 3</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+<pre class="hand">clear all
+clc
+x=[4 90 85 75;2 55 65 75;3 78 82 79;1 84 92 93];
+Fa=max(x)              <span class="c">% max of each column</span>
+[a,b]=max(x); Fb=b     <span class="c">% row of each max</span>
+Fc=max(x')             <span class="c">% max of each row</span>
+[a,b]=max(x'); Fd=b    <span class="c">% column of each max</span>
+Fe=max(max(x))
+Ff=mean(x)
+Fg=median(x)
+Fh=mean(x')
+Fi=median(x')
+Fj=mode(x)
+Fk=mean(mean(x))
+Fl=sort(x)
+Fm=sort(x,'descend')
+Fn=sortrows(x)
+Fo=sortrows(x,3)</pre>
+      <p class="note">transpose x' turns rows into columns, so the same function works on rows</p>
+      <div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>Fa =
+     4    90    92    93
+Fb =
+     1     1     4     4
+Fc =
+    90    75    82    93
+Fd =
+     2     4     3     4
+Fe =
+    93
+Ff =
+    2.5000   76.7500   81.0000   80.5000
+Fg =
+    2.5000   81.0000   83.5000   77.0000
+Fh =
+   63.5000   49.2500   60.5000   67.5000
+Fi =
+   80.0000   60.0000   78.5000   88.0000
+Fj =
+     1    55    65    75
+Fk =
+   60.1875
+Fl =                     Fm =
+     1    55    65    75      4    90    92    93
+     2    78    82    75      3    84    85    79
+     3    84    85    79      2    78    82    75
+     4    90    92    93      1    55    65    75
+Fn =                     Fo =
+     1    84    92    93      2    55    65    75
+     2    55    65    75      3    78    82    79
+     3    78    82    79      4    90    85    75
+     4    90    85    75      1    84    92    93</pre></div>
+      <p>Check one by hand: column 4 = 75, 75, 79, 93</p>
+      <div class="calc"><span>median</span><span>= (75 + 79) / 2 = 77</span><span>mode</span><span>= 75 (appears twice)</span><span>Fk</span><span>= 963 / 16 = <span class="boxed">60.1875</span></span></div>
+      <p class="note">(MATLAB prints Fl and Fm one after the other; they are side by side here to save space)</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li><code>x=[…;…]</code> types the matrix row by row.</li><li><code>max(x)</code> answers per column; <code>[a,b]=max(x)</code> also returns b, the row of each maximum.</li><li><code>x'</code> swaps rows and columns, so <code>max(x')</code> is the max of each row.</li><li><code>max(max(x))</code>: max of the 4 column maxima = max of everything.</li><li>No semicolon after Fa…Fo, so each one is printed: that is the output you write.</li></ol></div>
+<div class="answer">Fa = 4 90 92 93 · Fb = 1 1 4 4 · Fe = 93 · Ff = 2.5 76.75 81 80.5 · Fk = 60.1875 (verified by code)</div>
+  </article>
+<article class="card" id="s5">
+    <div class="q">
+      <div class="src"><span class="chip must">MUST DO</span><span class="chip hot">Mid 16-11-2025 Q1</span><span class="chip">Sheet 1 Q18</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 16-11-2025 Q1)</figcaption><img src="guide-img/c2.jpg" alt="Mid 16-11-2025 Q1 as printed" loading="lazy"></figure>
+      <h3>1.4 · Complex numbers</h3>
+      <p>Create complex numbers and a complex vector, then find magnitudes, angles and conjugates.</p>
+      <dl class="given"><dt>Given</dt><dd>A = 1 + i, B = 2 − 3i, C = 8 + 2i; D has real parts 2, 4, 6 and imaginary parts −3, 8, −16</dd></dl>
+      <p class="find">|A|, |B|, |C|, |D|; angles; conj(D); conj(D) with the transpose operator; √(A·A*) compared with |A|</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+<pre class="hand">clear all
+clc
+%% a, b
+A=1+i
+B=2-3i
+C=8+2i
+D=complex([2 4 6],[-3 8 -16])
+%% c  magnitude
+magA=abs(A), magB=abs(B), magC=abs(C), magD=abs(D)
+%% d  angle (rad)
+angA=angle(A), angB=angle(B), angC=angle(C), angD=angle(D)
+%% e, f  conjugate
+Dconj=conj(D)
+Dt=D'            <span class="c">% ' = conjugate transpose</span>
+%% g
+G=sqrt(A*conj(A))</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code (key lines)</span><pre>A =
+   1.0000 + 1.0000i
+D =
+   2.0000 - 3.0000i   4.0000 + 8.0000i   6.0000 -16.0000i
+magA =  1.4142    magB =  3.6056    magC =  8.2462
+magD =
+    3.6056    8.9443   17.0880
+angA =  0.7854    angB = -0.9828    angC =  0.2450
+angD =
+   -0.9828    1.1071   -1.2120
+Dconj =
+   2.0000 + 3.0000i   4.0000 - 8.0000i   6.0000 +16.0000i
+Dt =
+   2.0000 + 3.0000i
+   4.0000 - 8.0000i
+   6.0000 +16.0000i
+G =
+    1.4142</pre></div>
+      <div class="calc"><span>|A|</span><span>= √(1² + 1²) = √2 = 1.4142</span><span>A·A*</span><span>= (1+i)(1−i) = 1 − i² = 2</span><span>√(A·A*)</span><span>= √2 = <span class="boxed">1.4142 = |A|</span></span><span>∠A</span><span>= atan(1/1) = 0.7854 rad = 45°</span></div>
+      <p class="note">conj(D) stays a row; D' gives the same values as a column</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li><code>1+i</code>: i (or j) is √−1.</li><li><code>complex(re,im)</code> builds complex numbers from two lists.</li><li><code>abs</code> = length of the arrow = √(re² + im²); <code>angle</code> = its direction in radians.</li><li><code>conj</code> flips the sign of the imaginary part; <code>D'</code> does the same and turns the row into a column.</li><li><code>A*conj(A)</code> = re² + im², so its square root equals abs(A).</li></ol></div>
+<div class="answer">|D| = 3.6056, 8.9443, 17.0880 · ∠D = −0.9828, 1.1071, −1.2120 rad · √(A·A*) = |A| = 1.4142, because z·z* = |z|²</div>
+  </article>
+<div class="box mem"><span class="bt">Memorise</span><div class="tbl memt"><table><thead><tr><th>Write this</th><th>It means</th><th>Example</th></tr></thead><tbody><tr><td><span class="mono">max(x)</span></td><td>Biggest value in each column</td><td><span class="mono">max([1 5 3]) → 5</span></td></tr><tr><td><span class="mono">[v,k]=max(x)</span></td><td>Biggest value v and its position k</td><td><span class="mono">k = the row it is in</span></td></tr><tr><td><span class="mono">max(x&#x27;)</span></td><td>Biggest value in each row (x&#x27; turns rows into columns)</td><td></td></tr><tr><td><span class="mono">max(max(x))</span></td><td>Biggest value in the whole matrix</td><td></td></tr><tr><td><span class="mono">mean / median / mode</span></td><td>Average / middle value / most repeated, for each column</td><td><span class="mono">mean([1 5 3]) → 3</span></td></tr><tr><td><span class="mono">sort(x)  and  sort(x,&#x27;descend&#x27;)</span></td><td>Sort each column up / down (rows get mixed)</td><td></td></tr><tr><td><span class="mono">sortrows(x,3)</span></td><td>Sort whole rows using column 3 (rows stay together)</td><td></td></tr><tr><td><span class="mono">abs(z)  and  angle(z)</span></td><td>Size and angle (in radians) of a complex number</td><td><span class="mono">abs(3+4i) → 5</span></td></tr><tr><td><span class="mono">conj(z)  or  z&#x27;</span></td><td>Flip the sign of the imaginary part</td><td><span class="mono">2-3i → 2+3i</span></td></tr></tbody></table></div></div>
+<div class="box trap"><span class="bt">Exam traps</span>
+    <ul class="tight">
+      <li><b>median</b> of an even count = average of the two middle values (column 1 of x: 1 2 3 4 → 2.5).</li>
+      <li><b>mode</b> returns the <i>smallest</i> value when nothing repeats in a column.</li>
+      <li><b>sort(x)</b> sorts every column separately, so rows get mixed. <b>sortrows</b> keeps each row together.</li>
+      <li>Values with decimals print with 4 decimals (<code>2.5000</code>); all-integer results print without decimals.</li>
+      <li><code>angle</code> gives radians. Multiply by <code>180/pi</code> for degrees.</li>
+    </ul></div>
+<details class="yt"><summary><span class="yt-label">Try it yourself</span>Write the output</summary><div class="ytq"><pre class="code">y = [3 9 1; 6 2 8];
+m1 = max(y)
+[v,k] = min(y)
+s = sort(y(:,2))'
+mm = mean(mean(y))</pre><pre class="code">m1 =  6  9  8
+v  =  3  2  1     k = 1  2  1
+s  =  2  9
+mm =  4.8333</pre></div></details><div class="navrow"><a href="#big">← Part A</a><a href="#l2">Lecture 2 →</a></div>
+</section>
+
+<section class="sec" id="l2">
+<p class="eyebrow">Lecture 2 · MATLAB Matrices</p>
+<h2>Lecture 2: matrices, and solving circuits with them</h2>
+<div class="learn"><b>In this lecture</b><ul><li>Pick parts of a matrix and build bigger ones</li><li>Element-by-element math with the dot</li><li>Turn a circuit into a matrix equation and solve it (the most-asked exam topic)</li></ul><p class="muted">Order: basics → indexing → two variables → DC mesh → DC nodal → AC nodal → 3-phase → feeder → houses.</p></div>
+<div class="zero"><span class="bt">From zero · matrices and the circuit recipe</span>
+<h4>1. Picking parts of a matrix</h4>
+<p>Every element has an address <b>(row, column)</b>. A colon <code>:</code> alone means "all".</p><div class="tbl"><table><thead><tr><th>You write</th><th>Means</th></tr></thead><tbody><tr><td><span class="mono">M = [1 2 3; 4 5 6]</span></td><td><span class="mono">2 rows, 3 columns</span></td></tr><tr><td><span class="mono">M(2,3)</span></td><td><span class="mono">6 (row 2, column 3)</span></td></tr><tr><td><span class="mono">M(:,1)</span></td><td><span class="mono">1 and 4, as a column (all rows, column 1)</span></td></tr><tr><td><span class="mono">M(1,:)</span></td><td><span class="mono">1 2 3 (row 1, all columns)</span></td></tr><tr><td><span class="mono">M(4)</span></td><td><span class="mono">5 (single number: counts down the columns 1,4,2,5…)</span></td></tr><tr><td><span class="mono">M(:)</span></td><td><span class="mono">everything as one long column: 1 4 2 5 3 6</span></td></tr><tr><td><span class="mono">M'</span></td><td><span class="mono">the transpose: 3 rows, 2 columns</span></td></tr></tbody></table></div>
+<h4>2. The dot means "element by element"</h4>
+<p><code>[1 2 3].*[4 5 6]</code> gives 4 10 18: each pair multiplied. Without the dot, <code>*</code> is matrix multiplication (rows × columns), which gives an error for two rows. Same for <code>.^</code> and <code>./</code>. <b>Rule: when you mean "for every value", use the dot.</b></p>
+<h4>3. Why circuits become matrices</h4>
+<p>A circuit with two unknown currents gives two equations. For example:</p>
+<div class="calc"><span>4·I1 − 2·I2</span><span>= 2</span><span>−2·I1 + 6·I2</span><span>= 6</span></div>
+<p>Written as a table of numbers times a list of unknowns:</p>
+<div class="calc"><span>[ 4 −2 ; −2 6 ] · [ I1 ; I2 ]</span><span>= [ 2 ; 6 ]</span></div>
+<p>In MATLAB: type the table as <code>Z</code>, the right side as <code>E</code>, and write <code>I = inv(Z)*E</code>. MATLAB solves the equations (here I1 = 1.2, I2 = 1.4). <b>Your job in the exam is only to build Z and E correctly.</b></p>
+<h4>4. Recipe: mesh analysis (loop currents)</h4>
+<ol><li>Draw one clockwise current in each window of the circuit: I1, I2.</li>
+<li><b>Diagonal of Z</b> = sum of all resistances (impedances) in that loop.</li>
+<li><b>Off-diagonal</b> = <b>minus</b> the resistance shared by the two loops.</li>
+<li><b>E</b> = sum of the source voltages in each loop (+ if the source pushes the current the clockwise way).</li>
+<li>A shared branch carries I1 − I2.</li></ol>
+<h4>5. Recipe: nodal analysis (node voltages)</h4>
+<ol><li>Pick the bottom wire as 0 V. Name the other junctions V1, V2.</li>
+<li><b>Diagonal of Y</b> = sum of 1/R (or 1/Z) of everything touching that node.</li>
+<li><b>Off-diagonal</b> = <b>minus</b> 1/R of the element between the two nodes.</li>
+<li><b>I</b> = current sources pushing into each node (a source E in series with R counts as E/R).</li>
+<li><code>V = inv(Y)*I</code>.</li></ol>
+<h4>6. AC: same recipe with complex numbers</h4>
+<p>Inductor: <code>ZL = j*2*pi*f*L</code>. Capacitor: <code>ZC = 1/(j*2*pi*f*C)</code> (if the reactance X<sub>C</sub> is given directly: <code>-j*XC</code>). A source 120∠60°: <code>120*(cosd(60)+j*sind(60))</code>.</p></div><article class="card" id="n3">
+<div class="q"><div class="src"><span class="chip">Sheet 2 Q1</span><span class="chip">Lecture 2 Exercise 2-1</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 2 Q1)</figcaption><img src="guide-img/n_s2q1.jpg" alt="As it appears in the sheet (Sheet 2 Q1)" loading="lazy"></figure>
+<h3>2.1 · Pick parts of matrices and build new ones</h3>
+<p>Use a = [12 17 3 6], b = [5 8 3; 1 2 3; 2 4 6], c = [22; 17; 4].</p>
+<p class="find">x1 … x8</p>
+</div>
+<div class="paper"><span class="mn">2.1</span>
+<pre class="hand">a=[12 17 3 6];  b=[5 8 3;1 2 3;2 4 6];  c=[22;17;4];
+x1=a(1,2)              <span class="c">% 17</span>
+x2=b(:,3)              <span class="c">% 3 ; 3 ; 6   (a column)</span>
+x3=b(3,:)              <span class="c">% 2 4 6</span>
+x4=[b(1,1) b(2,2) b(3,3)]   <span class="c">% 5 2 6   (or diag(b)')</span>
+x5=[a(1:3); b]         <span class="c">% 4x3: first row 12 17 3, then b</span>
+x6=[c b; a]            <span class="c">% 4x4: c beside b, a under them</span>
+x7=b(8)                <span class="c">% 3   (count down columns: 5 1 2 8 2 4 3 3 ...)</span>
+x8=b(:)                <span class="c">% b as one column</span></pre><div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>x5 =                  x6 =
+    12    17     3        22     5     8     3
+     5     8     3        17     1     2     3
+     1     2     3         4     2     4     6
+     2     4     6        12    17     3     6</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li><code>a(1:3)</code> = elements 1 to 3 of a.</li><li><code>[A; B]</code> stacks A on top of B (the column counts must match: 3 and 3).</li><li><code>[c b]</code> puts c beside b (the row counts must match: 3 and 3).</li><li>Single-number addresses count down column 1, then column 2…</li></ol></div>
+<div class="answer">x1 = 17, x2 = [3;3;6], x3 = [2 4 6], x4 = [5 2 6], x7 = 3</div>
+</article>
+<article class="card" id="n4">
+<div class="q"><div class="src"><span class="chip">Sheet 2 Q2</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 2 Q2)</figcaption><img src="guide-img/n_s2q2.jpg" alt="As it appears in the sheet (Sheet 2 Q2)" loading="lazy"></figure>
+<h3>2.2 · Two variables at once: meshgrid</h3>
+<p>Areas of rectangles with lengths 1, 3, 5 cm and widths 2, 4, 6, 8 cm (12 answers).</p>
+<p class="find">a 4 × 3 table of areas</p>
+</div>
+<div class="paper"><span class="mn">2.2</span>
+<pre class="hand">L=[1 3 5];  W=[2 4 6 8];
+[LL,WW]=meshgrid(L,W);   <span class="c">% every pair of L and W</span>
+Area=LL.*WW</pre><div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>Area =
+     2     6    10
+     4    12    20
+     6    18    30
+     8    24    40</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li><code>meshgrid</code> makes two tables: LL repeats L down the rows, WW repeats W across the columns.</li><li><code>.*</code> multiplies the matching positions, so every length meets every width.</li></ol></div>
+<div class="answer">Rows = widths 2, 4, 6, 8; columns = lengths 1, 3, 5. Same idea for Sheet 2 Q3 (cylinder volume = pi*R.^2.*H) and Q5 (I = V./R for every V and R).</div>
+</article>
+<article class="card" id="s1">
+    <div class="q">
+      <div class="src"><span class="chip must">MUST DO</span><span class="chip hot">Mid 2020 Q2</span><span class="chip hot">Mid 2024/25 Q4</span><span class="chip">Finals 2021, 2022, 2024</span><span class="chip">Sheet 2 Q8–11 · Sheet 7 Q11–12</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 2024/25 Q4)</figcaption><img src="guide-img/c4.jpg" alt="Mid 2024/25 Q4 with circuit" loading="lazy"></figure>
+      <h3>2.3 · DC mesh analysis with a swept source and a loss function</h3>
+      <p>Find the value of E2 that gives zero current in R1. For every E2, compute the losses in R1, R2, R3 inside a function file <code>plossfun.m</code>, print a table, and sketch PlossR1 against E2.</p>
+      <dl class="given"><dt>Circuit</dt><dd>Left mesh: E1 = 6 V, R1 = 2 Ω; middle branch: R2 = 2 Ω with E2; right mesh: R3 = 4 Ω, E3 = 2 V</dd><dt>Sweep</dt><dd>E2 = 0 : 0.5 : 20 V</dd></dl>
+      <p class="find">E2 for I<sub>R1</sub> = 0, table of E2, I1, I2, PlossR1–R3, sketch of PlossR1(E2), matrix or loop (which is better?)</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+      <p>Mesh equations (clockwise I1 left, I2 right; signs as in the doctor's model answer):</p>
+      <div class="calc"><span>Loop 1:</span><span>(R1+R2) I1 − R2 I2 = E1 − E2</span><span>Loop 2:</span><span>−R2 I1 + (R2+R3) I2 = E2 + E3</span></div>
+      <div class="calc"><span>[ 4  −2 ; −2  6 ] [I1 ; I2]</span><span>= [ 6 − E2 ; 2 + E2 ]</span></div>
+      <p>Solving by hand (det = 4·6 − 2·2 = 20):</p>
+      <div class="calc"><span>I1</span><span>= (6(6−E2) + 2(2+E2)) / 20 = 2 − 0.2 E2</span><span>I2</span><span>= (2(6−E2) + 4(2+E2)) / 20 = 1 + 0.1 E2</span><span>I1 = 0 ⇒</span><span>E2 = <span class="boxed">10 V</span></span></div>
+      <span class="mn" style="margin-top:8px">2</span>
+<pre class="hand"><span class="c">%% mainQ2.m</span>
+clear all, clc
+R1=2; R2=2; R3=4;
+z=[R1+R2 -R2; -R2 R2+R3];       <span class="c">% resistance matrix</span>
+k=1;
+for E=0:0.5:20
+   E2(k)=E;
+   Em=[6-E; 2+E];
+   I=inv(z)*Em;
+   I1(k)=I(1);  I2(k)=I(2);
+   [P1(k),P2(k),P3(k)]=plossfun(I1(k),I2(k),R1,R2,R3);
+   k=k+1;
+end
+b=find(abs(I1)&lt;1e-6);           <span class="c">% NOT I1==0</span>
+if isempty(b)
+   disp('none of the values of E2=0, 0.5, 1, ..., 20 give zero current through R1')
+else
+   fprintf('The current through R1 = 0 at E2 = %4.2f V\n',E2(b))
+end
+Table=[E2',I1',I2',P1',P2',P3'];
+disp('   E2       I1       I2     PlossR1  PlossR2  PlossR3')
+fprintf('%7.2f %8.4f %8.4f %8.4f %8.4f %8.4f\n',Table')
+plot(E2,P1), grid on, xlabel('E2 (V)'), ylabel('PlossR1 (W)')
+
+<span class="c">%% plossfun.m  (separate file)</span>
+function [PlossR1,PlossR2,PlossR3]=plossfun(I1,I2,R1,R2,R3)
+PlossR1=I1^2*R1;
+PlossR2=(I1-I2)^2*R2;           <span class="c">% R2 carries I1-I2</span>
+PlossR3=I2^2*R3;
+end</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code (first and middle rows)</span><pre>The current through R1 = 0 at E2 = 10.00 V
+   E2       I1       I2     PlossR1  PlossR2  PlossR3
+   0.00   2.0000   1.0000   8.0000   2.0000   4.0000
+   0.50   1.9000   1.0500   7.2200   1.4450   4.4100
+   1.00   1.8000   1.1000   6.4800   0.9800   4.8400
+   ...
+  10.00   0.0000   2.0000   0.0000   8.0000  16.0000
+   ...
+  20.00  -2.0000   3.0000   8.0000  50.0000  36.0000</pre></div>
+      <span class="mn">3</span>
+      <p>Sketch: PlossR1 = 2(2 − 0.2E2)² is a parabola, 8 W at 0 V and 20 V, zero at 10 V.</p>
+      <div class="plot sm" id="pl-ploss"></div><p class="swipe">Swipe sideways to see the whole plot →</p>
+      <p>Matrix or loop? <span class="u2">Matrix (vector) form is faster</span> and shorter; the loop is easier to follow for one value at a time.</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li><code>z=[R1+R2 -R2; -R2 R2+R3]</code>: the mesh recipe (diagonal = loop total, off-diagonal = minus shared R2).</li><li><code>for E=0:0.5:20</code> repeats the solution 41 times; <code>k</code> counts the passes so each result is stored at position k.</li><li><code>Em=[6-E; 2+E]</code>: source voltages in loop 1 and loop 2 for this E2.</li><li><code>inv(z)*Em</code> solves for both mesh currents.</li><li><code>plossfun</code> returns I²R for each resistor; R2 carries I1 − I2.</li><li><code>find(abs(I1)&lt;1e-6)</code> finds where I1 is (practically) zero; <code>isempty</code> checks if nothing was found.</li><li><code>Table'</code> makes fprintf print one row per line.</li></ol></div>
+<div class="answer">E2 = 10 V gives I<sub>R1</sub> = 0. At the original E2 = 4 V: I1 = 1.2 A, I2 = 1.4 A (current in R3 = 1.4 A), losses 2.88 / 0.08 / 7.84 W, so R3 exceeds a 3 W rating (Sheet 2 Q9).</div>
+  </article>
+<article class="card" id="n5">
+<div class="q"><div class="src"><span class="chip">Sheet 2 Q12</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 2 Q12)</figcaption><img src="guide-img/n_s2q12.jpg" alt="As it appears in the sheet (Sheet 2 Q12)" loading="lazy"></figure>
+<h3>2.4 · DC nodal analysis (stepping stone to 2.5)</h3>
+<p>Find the current in R3 = 4 kΩ with nodal analysis. 10 V has + on top; I2 = 3 mA points down; I4 = 2 mA points up.</p>
+<p class="find">V1, V2, I<sub>R3</sub></p>
+</div>
+<div class="paper"><span class="mn">2.4</span>
+<p>Node 1 (top-left junction) and node 2 (top-right), bottom wire = 0 V:</p><div class="calc"><span>Node 1:</span><span>(1/5k + 1/3k + 1/4k)·V1 − (1/4k)·V2 = 10/5k − 3m</span><span>Node 2:</span><span>−(1/4k)·V1 + (1/4k + 1/2k)·V2 = 2m</span></div><pre class="hand">clear all, clc
+R1=5e3; R2=3e3; R3=4e3; R4=2e3;  E=10; I2=3e-3; I4=2e-3;
+Y=[1/R1+1/R2+1/R3   -1/R3;
+   -1/R3       1/R3+1/R4];
+I=[E/R1-I2; I4];
+V=inv(Y)*I
+IR3=(V(1)-V(2))/R3</pre><div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>V =
+   -0.4762
+    2.5079
+IR3 =
+  -7.4603e-04</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li><code>5e3</code> means 5×10³ = 5000 (5 kΩ); <code>3e-3</code> = 0.003 A (3 mA).</li><li>Diagonal: everything touching the node. R1, R2, R3 touch node 1; R3, R4 touch node 2.</li><li>Off-diagonal: minus the element between the nodes (R3).</li><li>The 10 V with its 5 kΩ becomes a 2 mA current into node 1; I2 leaves node 1, so −3 mA.</li><li>A negative answer only means the current flows opposite to the direction you assumed.</li></ol></div>
+<div class="answer">V1 = −0.476 V, V2 = 2.508 V, I<sub>R3</sub> = −0.746 mA: 0.746 mA flows from node 2 to node 1.</div>
+</article>
+<article class="card" id="s2">
+    <div class="q">
+      <div class="src"><span class="chip must">MUST DO</span><span class="chip hot">Mid 16-11-2025 Q3</span><span class="chip">Sheet 2 Q14</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 16-11-2025 Q3)</figcaption><img src="guide-img/c5.jpg" alt="Mid 16-11-2025 Q3 with circuit" loading="lazy"></figure>
+      <h3>2.5 · AC nodal analysis</h3>
+      <p>Find the voltage V across the inductor using nodal analysis.</p>
+      <dl class="given"><dt>Circuit</dt><dd>Current source I1 = 1∠40° A into node 1; R1 = 3 Ω node 1–ground; X<sub>C</sub> = 2 Ω between node 1 and node 2; X<sub>L</sub> = 4 Ω node 2–ground (V across it); R2 = 6 Ω from node 2 to source E2 = 12∠0° V</dd></dl>
+      <p class="find">V (node 2 voltage) in rectangular and polar form</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+      <p>Replace E2 in series with R2 by a current source E2/R2 into node 2.</p>
+      <div class="calc"><span>Node 1:</span><span>(1/R1 + 1/Z<sub>C</sub>) V1 − (1/Z<sub>C</sub>) V2 = I1</span><span>Node 2:</span><span>−(1/Z<sub>C</sub>) V1 + (1/Z<sub>C</sub> + 1/Z<sub>L</sub> + 1/R2) V2 = E2/R2</span><span>Z<sub>C</sub></span><span>= −j2 Ω,  Z<sub>L</sub> = +j4 Ω</span></div>
+      <span class="mn" style="margin-top:8px">2</span>
+<pre class="hand">clear all, clc
+I1=1*(cosd(40)+j*sind(40));
+E2=12;  R1=3;  R2=6;  ZC=-2j;  ZL=4j;
+Y=[1/R1+1/ZC      -1/ZC;
+   -1/ZC     1/ZC+1/ZL+1/R2];
+I=[I1; E2/R2];
+V=inv(Y)*I;
+V2=V(2)
+fprintf('V = %.4f %+.4fj = %.4f V at %.2f deg\n', ...
+        real(V2),imag(V2),abs(V2),angle(V2)*180/pi)</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>V2 =
+   4.8502 + 3.1827i
+V = 4.8502 +3.1827j = 5.8012 V at 33.27 deg</pre></div>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li>Z<sub>C</sub> = −j2 and Z<sub>L</sub> = +j4 because the reactances are given in ohms.</li><li>Diagonal of Y: everything touching each node; off-diagonal: minus the capacitor between them.</li><li><code>E2/R2</code>: the 12 V source with its 6 Ω acts like a 2 A source into node 2.</li><li><code>V(2)</code> is the voltage across X<sub>L</sub>, the V asked for.</li><li><code>angle(V2)*180/pi</code> converts radians to degrees for the polar answer.</li></ol></div>
+<div class="answer">V = 4.850 + j3.183 V = 5.80∠33.27° V (node 1: V1 = 5.29∠48.75° V)</div>
+  </article>
+<article class="card" id="s3">
+    <div class="q">
+      <div class="src"><span class="chip must">MUST DO</span><span class="chip hot">Mid 2023/24 Q1 [9]</span><span class="chip hot">Undated mid Q1 [12]</span><span class="chip">Finals 2022, 2023</span><span class="chip">Sheet 2 Q13</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 2023/24 Q1)</figcaption><img src="guide-img/c6.jpg" alt="Mid 2023/24 Q1 with Fig. I" loading="lazy"></figure>
+      <h3>2.6 · Balanced 3-phase circuit: IbB, VAN and a frequency sweep</h3>
+      <p>(a) Find IbB and VAN at f = 100 Hz by mesh analysis and print them with disp and fprintf. (b) Repeat for f = 25 : 1 : 250 Hz (or 50 : 50 : 25000 Hz) using matrices, with total load power, line losses and generated power, and print a table. (c) Plot the results against f with subplot.</p>
+      <dl class="given"><dt>Sources</dt><dd>Van = 120∠60°, Vbn = 120∠−60°, Vcn = 120∠180° V</dd><dt>Each line</dt><dd>2 Ω + 1.6 mH</dd><dt>Each load phase (star)</dt><dd>10 Ω + 10 mH</dd></dl>
+      <p class="find">IbB, VAN (complex), and for every f: ZaA, ZAN, IbB, VAN, Pload, Ploss, Pgen</p>
+    </div>
+    <div class="paper">
+      <span class="mn">a</span>
+<pre class="hand">clear all, clc
+%% System data and impedance matrix
+f=100;
+van=120*(cosd(60)+j*sind(60));
+vbn=120*(cosd(-60)+j*sind(-60));
+vcn=120*(cosd(180)+j*sind(180));
+zaA=2+j*(2*pi*f*1.6e-3);  zbB=zaA;  zcC=zaA;
+zAN=10+j*(2*pi*f*10e-3);  zBN=zAN;  zCN=zAN;
+%% Mesh solving
+A=[zaA+zAN+zBN+zbB     -1*(zBN+zbB);
+   -1*(zBN+zbB)     zcC+zCN+zBN+zbB];
+B=[van-vbn; vbn-vcn];
+I=inv(A)*B;
+IbB=I(2)-I(1)
+VAN=I(1)*zAN
+disp(' ====== the results of part-1 ====== ')
+fprintf('The current IbB= %f %+fj \n',real(IbB),imag(IbB))
+fprintf('The voltage VAN= %f %+fj \n',real(VAN),imag(VAN))</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code</span><pre> ====== the results of part-1 ======
+The current IbB= -0.189946 -8.544886j
+The voltage VAN= 49.139634 +88.172302j</pre></div>
+      <p class="note">check: per phase, IaA = Van / (zaA + zAN)</p>
+      <div class="calc"><span>X</span><span>= 2π·100·(1.6 + 10) mH = 7.288 Ω</span><span>|Z|</span><span>= √(12² + 7.288²) = 14.04 Ω</span><span>|IaA|</span><span>= 120 / 14.04 = 8.547 A, ∠ = 60° − 31.27° = 28.73°</span><span>IbB</span><span>= IaA∠−120° = <span class="boxed">8.547∠−91.27° A</span></span><span>VAN</span><span>= IaA·zAN = <span class="boxed">100.94∠60.87° V</span></span></div>
+      <span class="mn" style="margin-top:8px">b</span>
+<pre class="hand"><span class="c">%% Part b: matrix form (no loop) - the doctor's "matrix representation"</span>
+f=(25:1:250)';                     <span class="c">% or (50:50:25000)'</span>
+zaA=2+j*2*pi*f*1.6e-3;
+zAN=10+j*2*pi*f*10e-3;
+IaA=van./(zaA+zAN);                 <span class="c">% balanced: one phase is enough</span>
+IbB=IaA*(cosd(-120)+j*sind(-120));
+VAN=IaA.*zAN;
+Pload=3*abs(IaA).^2*10;
+Ploss=3*abs(IaA).^2*2;
+Pgen=Pload+Ploss;
+Table=[f, real(VAN), imag(VAN), Pgen];
+disp('    f        VAN (complex)            Pgen')
+fprintf('%6.0f  %10.4f %+10.4fj  %10.4f\n',Table')</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code (rows)</span><pre>    f        VAN (complex)            Pgen
+    25     49.5956   +86.9257j   3518.8673
+    26     49.5818   +86.9409j   ...
+   100     49.1396   +88.1723j   2629.8413
+   250     49.8308   +89.4774j   1089.0448</pre></div>
+      <p class="note">loop version (Final 2022 part b): put the part-a lines inside <code>for k=1:length(f) ... IbB(k)=I(2)-I(1); end</code></p>
+      <span class="mn">c</span>
+<pre class="hand">subplot(2,2,1), plot(f,abs(zAN)), title('|Z_{AN}|'), grid on
+subplot(2,2,2), semilogx(f,abs(zaA),'r--'), title('|Z_{aA}|')
+subplot(2,2,3), stem(f,abs(IbB)), title('|I_{bB}| (A)')
+subplot(2,2,4), area(f,Pgen), title('P_{gen} (W)'), xlabel('f (Hz)')</pre>
+      <div class="plot sm" id="pl-ibb"></div><p class="swipe">Swipe sideways →</p>
+      <p class="cap">|IbB| falls as f rises because both reactances grow (9.89 A at 25 Hz → 5.50 A at 250 Hz).</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li>Each source as a complex number: magnitude × (cos + j sin) of its angle in degrees.</li><li>Line and load impedances for f = 100 Hz.</li><li>Mesh 1 goes out on line a and back on line b; mesh 2 out on b, back on c. B = differences of the source voltages.</li><li><code>IbB = I(2)-I(1)</code>: line b is shared by both meshes.</li><li>Part b in matrix form: f is a column of all frequencies, so one line computes every case (that is "matrix representation").</li><li>Balanced circuit: one phase is enough, IbB is IaA rotated by −120°.</li></ol></div>
+<div class="answer">IbB = −0.1899 − j8.5449 A (8.547∠−91.27°), VAN = 49.140 + j88.172 V (100.94∠60.87°); at f = 25 Hz: Pload = 2932.39 W, Ploss = 586.48 W, Pgen = 3518.87 W</div>
+  </article>
+<article class="card" id="n6">
+<div class="q"><div class="src"><span class="chip">Sheet 1 Q19</span><span class="chip hot">Final 2024 Q4</span><span class="chip">Solved in Lecture 2</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 1 Q19)</figcaption><img src="guide-img/feeder.jpg" alt="As it appears in the sheet (Sheet 1 Q19)" loading="lazy"></figure>
+<h3>2.7 · Feeder loading over 24 hours</h3>
+<p>Hourly kW and kVAr of a feeder at 380 V line voltage.</p>
+<p class="find">a–l</p>
+</div>
+<div class="paper"><span class="mn">2.7</span>
+<pre class="hand">clear all, clc
+hr=1:24;
+P=[1370 1120 1050 980 980 1075 1230 1450 1509 1520 1640 1750 ...
+   1720 1740 1680 1530 1630 1760 1850 2020 1980 1720 1660 1580]*1000;
+Q=[550 530 500 460 500 520 520 650 540 605 700 720 ...
+   715 685 695 590 635 750 780 800 820 715 650 600]*1000;
+%% a  apparent power
+S=P+i*Q;  S_mag=abs(S);
+plot(hr,S_mag), xlabel('daily hour'), ylabel('S (VA)'), grid on
+%% b, c
+[S_max,hr_smax]=max(S_mag)
+S_average=mean(S_mag)
+%% d  power factor
+pf=cos(atan(Q./P));
+figure, plot(hr,pf)
+[pf_best,hr_best]=max(pf), [pf_worst,hr_worst]=min(pf)
+%% e  circuit breaker
+I=conj(S./(sqrt(3)*380));  I_abs=abs(I);
+I_CB=1.25*max(I_abs)
+%% f  heavily loaded hour = hr_smax (same as b)
+%% h  reactive power for pf = 0.95
+Q_c=Q-tan(acos(0.95)).*P;  figure, plot(hr,Q_c)
+%% i, j, k
+M=[hr',P',Q',I_abs',pf',S_mag'];
+Mj=sortrows(M,4)                <span class="c">% column 4 = current</span>
+[rows,cols]=size(Mj), len=length(Mj)
+%% l  voltage 380 V +/- 5 %
+V=380+(0.5-rand(1,24))*0.1*380;</pre><div class="screen"><span class="sh">Output: write this on paper under your code (key results)</span><pre>S_max = 2.1726e+06      hr_smax = 20
+S_average = 1.6502e+06
+pf_best = 0.9415  (hour 9)     pf_worst = 0.8908  (hour 5)
+I_CB = 4.1262e+03
+rows = 24   cols = 6   len = 24</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li><code>...</code> at the end of a line continues it on the next line.</li><li><code>*1000</code> turns kW into W.</li><li>S = P + jQ; its size <code>abs(S)</code> is the loading in VA.</li><li>pf = cos(φ) with φ = atan(Q/P).</li><li>3-phase line current I = S / (√3 · 380).</li><li>Q<sub>c</sub> = Q − P·tan(acos 0.95) is the kVAr to inject (positive) to reach pf 0.95.</li></ol></div>
+<div class="answer">Max 2.173 MVA at hour 20 (heaviest hour), mean 1.650 MVA, best pf 0.9415 at hour 9, worst 0.8908 at hour 5, circuit breaker ≥ 1.25 × 3301 A = 4126 A.</div>
+</article>
+<article class="card" id="s6">
+    <div class="q">
+      <div class="src"><span class="chip hot">Mid 16-11-2025 Q2</span><span class="chip">like Sheet 1 Q19</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 16-11-2025 Q2)</figcaption><img src="guide-img/c3a.jpg" alt="Mid 16-11-2025 Q2 part 1" loading="lazy"><img src="guide-img/c3b.jpg" alt="Mid 16-11-2025 Q2 part 2" loading="lazy"></figure>
+      <h3>2.8 · Three houses: demand, S, Q, θ, sorting, bar plot</h3>
+      <p>In one M-file: compute the factor that compares simultaneous and individual maximum demand, S, Q and θ for each house, statistics, random fluctuation, a sorted [P Q pf] matrix, the critical houses, a bar chart with a 12 kW line, and 24-hour load curves.</p>
+      <dl class="given"><dt>Given</dt><dd>P = [5 4.5 6.2] kW, P<sub>sim</sub> = 12 kW, pf (lagging) = [0.9 0.92 0.88]</dd></dl>
+      <p class="find">a–j as listed in the exam</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+<pre class="hand">clear all, clc
+P=[5 4.5 6.2];  Psim=12;  pf=[0.9 0.92 0.88];
+%% a
+DF=Psim/sum(P)                 <span class="c">% 12/15.7</span>
+%% b, c, d
+S=P./pf                        <span class="c">% kVA</span>
+Q=S.*sin(acos(pf))             <span class="c">% kVAr</span>
+theta=acosd(pf)                <span class="c">% degrees</span>
+%% e
+Pmean=mean(P), Pmax=max(P), Pmin=min(P)
+%% f  random multipliers 0.8 - 1.2
+m=0.8+0.4*rand(1,3);
+Pnew=P.*m
+DFnew=Psim/sum(Pnew)
+%% g
+M=[P' Q' pf'];
+Msorted=sortrows(M,3)          <span class="c">% ascending pf</span>
+%% h
+[Pm,hP]=max(P);   [pfm,hpf]=min(pf);
+fprintf('House %d has max P = %.1f kW\n',hP,Pm)
+fprintf('House %d has min pf = %.2f\n',hpf,pfm)
+%% i
+figure, bar(P), hold on
+plot([0.5 3.5],[Psim Psim],'r--'), hold off
+xlabel('House'), ylabel('P (kW)'), legend('P_i','P_{sim}=12 kW')
+%% j  24-hour curves
+k=0.4+0.6*rand(24,3);
+Pday=k.*repmat(P,24,1);
+figure, subplot(2,1,1), plot(1:24,Pday), title('Daily load of each house')
+subplot(2,1,2), plot(1:24,sum(Pday,2)), title('Total daily load')</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code (fixed parts)</span><pre>DF =
+    0.7643
+S =
+    5.5556    4.8913    7.0455
+Q =
+    2.4216    1.9170    3.3464
+theta =
+   25.8419   23.0739   28.3576
+Pmean = 5.2333   Pmax = 6.2000   Pmin = 4.5000
+Msorted =
+    6.2000    3.3464    0.8800
+    5.0000    2.4216    0.9000
+    4.5000    1.9170    0.9200
+House 3 has max P = 6.2 kW
+House 3 has min pf = 0.88</pre></div>
+      <p class="note">rand changes every run, so Pnew and DFnew have no fixed answer</p>
+      <div class="plot sm" id="pl-houses"></div><p class="swipe">Swipe sideways →</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li><code>P./pf</code> divides element by element: S of each house.</li><li><code>sin(acos(pf))</code> = sin θ, so Q = S sin θ.</li><li><code>0.8+0.4*rand(1,3)</code> gives three random numbers between 0.8 and 1.2.</li><li><code>sortrows(M,3)</code> sorts the rows by column 3 (pf).</li><li><code>repmat(P,24,1)</code> copies the row P 24 times so it matches the 24 × 3 random table.</li></ol></div>
+<div class="answer">12/15.7 = 0.7643 (its inverse 15.7/12 = 1.308 is the diversity factor; see the note below). House 3 is critical: largest P (6.2 kW) and lowest pf (0.88).</div>
+  <div class="box trap"><span class="bt">Label: extra, not from the slides</span><p>The exam calls it "demand factor", but the only data given are individual and simultaneous maxima. The textbook names are: <b>diversity factor = ΣP<sub>i</sub>/P<sub>sim</sub> = 1.308</b> and <b>coincidence factor = P<sub>sim</sub>/ΣP<sub>i</sub> = 0.764</b>. Write the formula you use next to the code so the marker can follow it.</p></div>
+  </article>
+<div class="box mem"><span class="bt">Memorise</span><div class="tbl memt"><table><thead><tr><th>Write this</th><th>It means</th><th>Example</th></tr></thead><tbody><tr><td><span class="mono">[1 2 3; 4 5 6]</span></td><td>A matrix: space = next column, ; = next row</td><td></td></tr><tr><td><span class="mono">0:0.5:2</span></td><td>From 0 to 2 in steps of 0.5</td><td><span class="mono">0  0.5  1  1.5  2</span></td></tr><tr><td><span class="mono">M(2,3)   M(:,1)   M(1,:)</span></td><td>One element / all of column 1 / all of row 1</td><td></td></tr><tr><td><span class="mono">x.*y</span></td><td>Multiply element by element (needs the dot)</td><td><span class="mono">[1 2].*[3 4] → 3 8</span></td></tr><tr><td><span class="mono">I=inv(Z)*E</span></td><td>Solve the circuit equations Z·I = E</td><td><span class="mono">mesh currents I1, I2</span></td></tr><tr><td><span class="mono">V=inv(Y)*I</span></td><td>Solve nodal equations Y·V = I</td><td><span class="mono">node voltages</span></td></tr><tr><td><span class="mono">120*(cosd(60)+j*sind(60))</span></td><td>The phasor 120∠60°</td><td></td></tr><tr><td><span class="mono">j*2*pi*f*L    1/(j*2*pi*f*C)</span></td><td>Impedance of an inductor / a capacitor</td><td></td></tr><tr><td><span class="mono">zeros(m,n)   ones(m,n)   diag([1 2 3])</span></td><td>Matrix of zeros / of ones / with 1 2 3 on the diagonal</td><td></td></tr></tbody></table></div></div>
+<div class="box trap"><span class="bt">Exam traps</span>
+    <ul class="tight">
+      <li><code>x*y</code> on two rows is an error; use <code>x.*y</code> element by element.</li>
+      <li><code>M(8)</code> counts <b>down columns</b>: in the 3×5 slide matrix, M(8) = M(2,3) = 4.</li>
+      <li>Don't use <code>i</code> or <code>j</code> as loop counters in AC problems; they stop meaning √−1.</li>
+      <li>Never test a computed current with <code>== 0</code>. Floating point gives 2.2×10⁻¹⁶, not 0. Use <code>abs(I1)&lt;1e-6</code>.</li>
+    </ul></div>
+<div class="navrow"><a href="#l1">← Lecture 1</a><a href="#l3">Lecture 3 →</a></div>
+</section>
+
+<section class="sec" id="l3">
+<p class="eyebrow">Lecture 3 · Plotting</p>
+<h2>Lecture 3: drawing graphs</h2>
+<div class="learn"><b>In this lecture</b><ul><li>Make a graph from two lists of numbers</li><li>Styles, labels, legends, several graphs in one window</li><li>Sketch on paper what MATLAB would draw</li></ul></div>
+<div class="zero"><span class="bt">From zero · how a plot is made</span>
+<p>A graph needs two lists of the same length: x values and y values. <code>plot(x,y)</code> puts a point at every (x, y) pair and joins them with lines. So every plotting answer has the same 3 steps:</p>
+<ol><li><b>Make x</b>: <code>x = 0:0.1*pi:2*pi;</code> (from 0 to 2π in small steps)</li>
+<li><b>Compute y from x</b>: <code>y = sin(x);</code></li>
+<li><b>Plot, then decorate</b>: <code>plot(x,y), title('…'), xlabel('…'), ylabel('…'), grid on</code></li></ol>
+<p><b>Style string</b> in quotes after x, y: line type + marker + colour, in any order. <code>'--r'</code> = dashed red, <code>':g'</code> = dotted green, <code>'-o'</code> = solid with circles, <code>'*'</code> = stars only.</p>
+<p><b>Several curves</b>: list them in one call <code>plot(x,y1,x,y2)</code>, or use <code>hold on</code> between plots. <b>New window</b>: <code>figure</code>. <b>Grid of small graphs</b>: <code>subplot(rows,cols,number)</code>; numbers go left → right, then down:</p><div class="tbl"><table><thead><tr><th>You write</th><th>Draws in</th></tr></thead><tbody><tr><td><span class="mono">subplot(2,2,1)</span></td><td><span class="mono">top-left</span></td></tr><tr><td><span class="mono">subplot(2,2,2)</span></td><td><span class="mono">top-right</span></td></tr><tr><td><span class="mono">subplot(2,2,3)</span></td><td><span class="mono">bottom-left</span></td></tr><tr><td><span class="mono">subplot(2,2,4)</span></td><td><span class="mono">bottom-right</span></td></tr><tr><td><span class="mono">subplot(3,1,2)</span></td><td><span class="mono">middle of 3 stacked graphs</span></td></tr></tbody></table></div><p><b>On paper</b>: draw the axes, label them, write the title, and mark the important values (peaks, where it crosses zero, the maximum point). It does not need to be perfect, just the right shape and the right numbers.</p></div><article class="card" id="n7">
+<div class="q"><div class="src"><span class="chip">Sheet 3 Q1</span><span class="chip">Solved in Lecture 3</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 3 Q1)</figcaption><img src="guide-img/n_s3q1.jpg" alt="As it appears in the sheet (Sheet 3 Q1)" loading="lazy"></figure>
+<h3>3.1 · Basic plots: sin and cos</h3>
+<p>x from 0 to 2π in steps of 0.1π.</p>
+<p class="find">a–g</p>
+</div>
+<div class="paper"><span class="mn">3.1</span>
+<pre class="hand">%% a, b
+x=0:0.1*pi:2*pi;
+y=sin(x);
+plot(x,y), title('x-y plotting'), xlabel('x-axis'), ylabel('y-axis')
+%% c
+y1=sin(x);  y2=cos(x);
+figure, plot(x,y1,x,y2)
+%% d, e
+figure, plot(x,y1,'--r',x,y2,':g')
+legend('sin(x)','cos(x)')
+%% f
+axis([-1 2*pi+1 -1.5 1.5])
+%% g
+a=cos(x);
+figure, plot(a)        <span class="c">% x-axis = element number 1 ... 21</span>
+figure, plot(x,a)      <span class="c">% x-axis = the angle 0 ... 2pi</span></pre><div class="plot sm" id="pl-sincos"></div><p class="swipe">Swipe sideways →</p><p class="cap">Sketch for d, e, f: sin dashed red, cos dotted green, x-axis from −1 to 2π + 1.</p>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li><code>0:0.1*pi:2*pi</code> gives 21 angles.</li><li><code>figure</code> opens a new window, so each part gets its own graph.</li><li><code>legend</code> names the curves in the order they were plotted.</li><li><code>axis([xmin xmax ymin ymax])</code> sets the visible range.</li></ol></div>
+<div class="answer">In g, plot(a) looks the same shape but the x-axis runs 1 to 21 (the position of each value), not 0 to 6.28.</div>
+</article>
+<article class="card" id="n8">
+<div class="q"><div class="src"><span class="chip">Sheet 3 Q5</span><span class="chip">Solved in Lecture 3</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 3 Q5)</figcaption><img src="guide-img/n_s3q5.jpg" alt="As it appears in the sheet (Sheet 3 Q5)" loading="lazy"></figure>
+<h3>3.2 · Adding harmonics: what odd harmonics do</h3>
+<p>va = 100 sin ωt + 30 sin 3ωt for ωt = 0 : 0.001π : 2π, then six variations with subplot.</p>
+<p class="find">the plots and your observation</p>
+</div>
+<div class="paper"><span class="mn">3.2</span>
+<pre class="hand">clear all, clc
+t=0:0.001*pi:2*pi;
+va=100*sin(t)+30*sin(3*t);
+figure, plot(t,100*sin(t),t,30*sin(3*t),t,va), grid on
+%% six waveforms
+vb=100*sin(t)+30*sin(3*t)+20*sin(5*t);
+vc=100*sin(t)+30*sin(3*t+pi/2);
+vd=100*sin(t)+30*sin(3*t-pi/2);
+ve=100*sin(t)+30*sin(3*t+pi);
+vf=100*sin(t)-30*sin(3*t+pi/2);
+figure
+subplot(3,2,1), plot(t,va), title('fundamental + 3rd')
+subplot(3,2,2), plot(t,vb), title('fundamental + 3rd + 5th')
+subplot(3,2,3), plot(t,vc), title('3rd shifted +90')
+subplot(3,2,4), plot(t,vd), title('3rd shifted -90')
+subplot(3,2,5), plot(t,ve), title('3rd shifted 180')
+subplot(3,2,6), plot(t,vf), title('3rd subtracted')</pre><div class="plot" id="pl-odd"></div><p class="swipe">Swipe sideways →</p>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li><code>3*t</code> makes the 3rd harmonic: 3 cycles while the fundamental does 1.</li><li><code>+pi/2</code> inside the sine shifts the harmonic by 90°.</li><li><code>subplot(3,2,k)</code>: 3 rows × 2 columns of graphs.</li></ol></div>
+<div class="answer">Observation: with only odd harmonics the negative half is a mirror image of the positive half, v(t + T/2) = −v(t), whatever the phase shift. (Sheet 3 Q8 adds a dc term 32: the whole wave just moves up by 32.)</div>
+</article>
+<article class="card" id="s15">
+    <div class="q">
+      <div class="src"><span class="chip hot">Undated mid Q2 [7]</span><span class="chip hot">Mid 2023/24 Q2 [6]</span><span class="chip">Sheet 3 Q9</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 2023/24 Q2)</figcaption><img src="guide-img/c7.jpg" alt="Mid 2023/24 Q2" loading="lazy"></figure>
+      <h3>3.3 · A harmonic voltage across R, L and C</h3>
+      <p>Draw the current in each element and the voltage for two cycles, using subplot, a title for each, and different styles for v and i. Then find the active power in R at each harmonic and draw it with a 3-D bar plot.</p>
+      <dl class="given"><dt>Voltage</dt><dd>v = 100 sin ωt + 30 sin(3ωt + π/3) + 10 sin(5ωt − π/6) V, f = 1 kHz</dd><dt>Loads</dt><dd>(a) R = 40 Ω, (b) L = 7.96 mH, (c) C = 25 µF; ωt = 0 : 0.05π : 4π</dd></dl>
+      <p class="find">i<sub>R</sub>, i<sub>L</sub>, i<sub>C</sub>; P at h = 1, 3, 5; bar3</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+      <p>Each harmonic h sees its own impedance:</p>
+      <div class="calc"><span>X<sub>L</sub></span><span>= 2π·1000·7.96×10⁻³ = 50.01 Ω, at h: h·X<sub>L</sub></span><span>X<sub>C</sub></span><span>= 1/(2π·1000·25×10⁻⁶) = 6.366 Ω, at h: X<sub>C</sub>/h</span><span>i<sub>L</sub></span><span>lags v by 90°, i<sub>C</sub> leads by 90°</span></div>
+<pre class="hand">clear all, clc
+wt=0:0.05*pi:4*pi;                 <span class="c">% 2 cycles</span>
+f=1000; w=2*pi*f;
+R=40; L=7.96e-3; C=25e-6;
+XL=w*L;  XC=1/(w*C);
+v=100*sin(wt)+30*sin(3*wt+pi/3)+10*sin(5*wt-pi/6);
+I1=v/R;
+I2=100/XL*sin(wt-pi/2)+30/(3*XL)*sin(3*wt+pi/3-pi/2) ...
+   +10/(5*XL)*sin(5*wt-pi/6-pi/2);
+I3=100/XC*sin(wt+pi/2)+30/(XC/3)*sin(3*wt+pi/3+pi/2) ...
+   +10/(XC/5)*sin(5*wt-pi/6+pi/2);
+subplot(3,1,1), plotyy(wt,v,wt,I1), title('(a) pure R = 40 \Omega')
+subplot(3,1,2), plot(wt,v,'-b',wt,I2*20,'--r'), title('(b) pure L, i x 20')
+subplot(3,1,3), plot(wt,v,'-b',wt,I3,':k'), title('(c) pure C')
+%% power in R at h = 1, 3, 5
+Vh=[100 30 10];
+P=Vh.^2/(2*R)                      <span class="c">% P = Vm^2 / 2R</span>
+figure, bar3(P), title('Active power at h = 1, 3, 5')</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>P =
+  125.0000   11.2500    1.2500</pre></div>
+      <div class="plot" id="pl-rlc"></div><p class="swipe">Swipe sideways →</p>
+      <p class="cap">To scale. i<sub>R</sub> has the same shape as v. In the inductor the 5th harmonic almost vanishes (its impedance is 5× bigger). In the capacitor the harmonics grow (impedance 5× smaller), so i<sub>C</sub> is very distorted.</p>
+      <div class="calc"><span>P<sub>1</sub></span><span>= 100² / (2·40) = 125 W</span><span>P<sub>3</sub></span><span>= 30² / 80 = 11.25 W</span><span>P<sub>5</sub></span><span>= 10² / 80 = 1.25 W</span><span>P</span><span>= <span class="boxed">137.5 W total</span></span></div>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li>X<sub>L</sub> and X<sub>C</sub> at the fundamental; harmonic h uses h·X<sub>L</sub> and X<sub>C</sub>/h.</li><li>Inductor current lags by 90° (−π/2), capacitor current leads by 90° (+π/2).</li><li><code>subplot(3,1,k)</code> stacks the three cases.</li><li><code>P=Vh.^2/(2*R)</code>: power of each harmonic in R; <code>bar3</code> draws it in 3-D.</li></ol></div>
+<div class="answer">X<sub>L</sub> = 50.01 Ω, X<sub>C</sub> = 6.366 Ω; P = 125, 11.25, 1.25 W (total 137.5 W). Peak harmonic currents: R 2.5 / 0.75 / 0.25 A; L 2.00 / 0.20 / 0.04 A; C 15.71 / 14.14 / 7.85 A.</div>
+  </article>
+<article class="card" id="s16">
+    <div class="q">
+      <div class="src"><span class="chip hot">Mid 2024/25 Q2 [7]</span><span class="chip">Final 2024 Q2</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 2024/25 Q2)</figcaption><img src="guide-img/c13.jpg" alt="Mid 2024/25 Q2 with figure" loading="lazy"></figure>
+      <h3>3.4 · Draw a transmission-line layout with plot and text</h3>
+      <p>A single-phase line has two conductor groups: A (sub-conductors a, b, c) and B (d, e). Accept the dimensions from the user and draw the layout with labels and dimension values.</p>
+      <dl class="given"><dt>Given</dt><dd>Horizontal distance A–B = 9 m; vertical spacing = 6 m (a–b, b–c, d–e)</dd></dl>
+      <p class="find">the figure, drawn by MATLAB</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+<pre class="hand">clear all, clc
+D=input('Distance between A and B (m) = ');     <span class="c">% 9</span>
+s=input('Vertical spacing (m) = ');            <span class="c">% 6</span>
+xA=[0 0 0];  yA=[2*s s 0];       <span class="c">% a b c</span>
+xB=[D D];    yB=[2*s s];         <span class="c">% d e</span>
+plot(xA,yA,'ko',xB,yB,'ko','MarkerSize',12), hold on
+plot(xA,yA,'k+',xB,yB,'k+','MarkerSize',12)
+text(xA+0.6,yA,{'a','b','c'})
+text(xB-1.2,yB,{'d','e'})
+text(-0.3,-2,'A'),  text(D-0.3,-2,'B')
+text(D/2-0.6,2*s+1.2,[num2str(D) ' m'])
+text(-2.6,1.5*s,[num2str(s) ' m']), text(-2.6,0.5*s,[num2str(s) ' m'])
+text(D+0.6,1.5*s,[num2str(s) ' m'])
+axis([-4 D+4 -4 2*s+3]), axis equal, hold off
+title('Single-phase overhead line: groups A and B')</pre>
+      <div class="plot sm" id="pl-tline"></div><p class="swipe">Swipe sideways →</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li>Coordinates: group A at x = 0 (heights 12, 6, 0), group B at x = 9 (heights 12, 6).</li><li><code>'ko'</code> = black circles; plotting <code>'k+'</code> on top gives the ⊕ symbol.</li><li><code>text</code> writes each label and dimension at a chosen point.</li><li><code>axis equal</code> keeps metres the same length on both axes.</li></ol></div>
+<div class="answer">Conductors at a(0,12), b(0,6), c(0,0), d(9,12), e(9,6) with labels and the 9 m / 6 m values written by text().</div>
+  </article>
+<article class="card" id="n9">
+<div class="q"><div class="src"><span class="chip">Sheet 3 Q11</span><span class="chip">Final 2021 Q3</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 3 Q11)</figcaption><img src="guide-img/n_s3q11.jpg" alt="As it appears in the sheet (Sheet 3 Q11)" loading="lazy"></figure>
+<h3>3.5 · Series RLC resonance and a semilog plot</h3>
+<p>R<sub>G</sub> = 50 Ω, R<sub>coil</sub> = 5 Ω, L = 2.2 mH, C = 0.044 µF, source 16 sin ωt.</p>
+<p class="find">ω<sub>s</sub>, f<sub>s</sub>, Z, I, V<sub>L</sub>, V<sub>C</sub>, Q, Q<sub>s</sub>, plot of |Z| against f</p>
+</div>
+<div class="paper"><span class="mn">3.5</span>
+<div class="calc"><span>ω<sub>s</sub></span><span>= 1/√(LC) = 1/√(2.2×10⁻³ · 0.044×10⁻⁶) = 101 639 rad/s</span><span>f<sub>s</sub></span><span>= ω<sub>s</sub>/2π = 16 176 Hz</span><span>Z<sub>s</sub></span><span>= R<sub>G</sub> + R<sub>coil</sub> = 55 Ω (X<sub>L</sub> = X<sub>C</sub> cancel)</span><span>I</span><span>= (16/√2) / 55 = 0.2057 A</span><span>V<sub>L</sub> = V<sub>C</sub></span><span>= I·X<sub>L</sub> = 0.2057 × 223.6 = 46.0 V</span><span>Q<sub>L</sub> = Q<sub>C</sub></span><span>= I²·X<sub>L</sub> = 9.46 VAR</span><span>Q<sub>s</sub></span><span>= Q<sub>L</sub> / P = 9.46 / (0.2057² × 55) = <span class="boxed">4.07</span></span></div><pre class="hand">clear all, clc
+RG=50; Rc=5; L=2.2e-3; C=0.044e-6;  E=16/sqrt(2);   <span class="c">% rms</span>
+R=RG+Rc;
+ws=1/sqrt(L*C), fs=ws/(2*pi)           <span class="c">% a</span>
+Zs=R                                   <span class="c">% b</span>
+I=E/Zs                                 <span class="c">% c</span>
+XL=ws*L;  XC=1/(ws*C);
+VL=I*XL, VC=I*XC
+QL=I^2*XL, QC=I^2*XC                   <span class="c">% d</span>
+Qs=QL/(I^2*R)                          <span class="c">% e</span>
+f=linspace(fs/100,fs*100,2000);  w=2*pi*f;
+semilogx(f,abs(R+j*(w*L-1./(w*C)))), grid on, hold on     <span class="c">% f</span>
+semilogx(f,abs(200+Rc+j*(w*L-1./(w*C))))                  <span class="c">% g</span>
+semilogx(f,abs(1000+Rc+j*(w*L-1./(w*C))))
+xlabel('f (Hz)'), ylabel('|Z| (\Omega)'), legend('R_G=50','R_G=200','R_G=1000')</pre><div class="plot sm" id="pl-res"></div><p class="swipe">Swipe sideways →</p>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li>At resonance the reactances cancel, so the impedance is only the resistance.</li><li><code>linspace(a,b,n)</code> makes n points from a to b.</li><li><code>semilogx</code> uses a log scale on the frequency axis (Fs/100 to Fs×100 = 4 decades).</li><li><code>1./(w*C)</code>: the dot is needed because w is a vector.</li></ol></div>
+<div class="answer">ω<sub>s</sub> = 101.6 krad/s, f<sub>s</sub> = 16.18 kHz, Z = 55 Ω, I = 0.206 A, V<sub>L</sub> = V<sub>C</sub> = 46.0 V, Q = 9.46 VAR, Q<sub>s</sub> = 4.07 (match the values printed in the sheet). Bigger R<sub>G</sub> → shallower, wider dip. Doubling L and halving C keeps f<sub>s</sub> but makes the dip sharper; the opposite makes it wider.</div>
+</article>
+<div class="box mem"><span class="bt">Memorise</span><div class="tbl memt"><table><thead><tr><th>Write this</th><th>It means</th><th>Example</th></tr></thead><tbody><tr><td><span class="mono">plot(x,y)</span></td><td>Draw y against x</td><td></td></tr><tr><td><span class="mono">plot(x,y,&#x27;--r&#x27;)</span></td><td>Dashed red line (line style + colour)</td><td><span class="mono">&#x27;:g&#x27; = dotted green</span></td></tr><tr><td><span class="mono">title  xlabel  ylabel  legend  grid on</span></td><td>Names and grid, written after plot</td><td></td></tr><tr><td><span class="mono">hold on / hold off</span></td><td>Keep the old curve when drawing a new one</td><td></td></tr><tr><td><span class="mono">figure</span></td><td>Open a new graph window</td><td></td></tr><tr><td><span class="mono">subplot(2,1,1)</span></td><td>Split the window into 2 rows × 1 column, draw in box 1</td><td></td></tr><tr><td><span class="mono">axis([0 10 -1 1])</span></td><td>Show x from 0 to 10 and y from −1 to 1</td><td></td></tr><tr><td><span class="mono">text(x,y,&#x27;A&#x27;)</span></td><td>Write the text A on the graph at point (x, y)</td><td></td></tr><tr><td><span class="mono">plotyy(x,y1,x,y2)</span></td><td>Two curves, each with its own y-axis</td><td></td></tr><tr><td><span class="mono">bar(P)   bar3(P)   pie(P)</span></td><td>Bar chart / 3-D bar chart / pie chart</td><td></td></tr><tr><td><span class="mono">polar(theta,r)</span></td><td>Polar plot</td><td></td></tr><tr><td><span class="mono">semilogx  semilogy  loglog</span></td><td>Log scale on x / on y / on both</td><td></td></tr></tbody></table></div></div>
+<div class="box trap"><span class="bt">Exam traps</span>
+    <ul class="tight">
+      <li><code>plot(a)</code> with one vector uses the element number (1, 2, 3 …) as x.</li>
+      <li><code>plot(A)</code> with one complex vector plots imaginary against real.</li>
+      <li>Without <code>hold on</code>, a second <code>plot</code> erases the first.</li>
+      <li>In <code>subplot(3,2,4)</code> box 4 is row 2, column 2.</li>
+      <li>Straight lines (Sheet 3 Q4): y = 5x + 3 → normal axes; y = 3x² and y = 1/x → loglog; y = 12e<sup>x+2</sup> → semilogy.</li>
+    </ul></div>
+<div class="navrow"><a href="#l2">← Lecture 2</a><a href="#l4">Lecture 4 →</a></div>
+</section>
+
+<section class="sec" id="l4">
+<p class="eyebrow">Lecture 4 · User-Defined Functions</p>
+<h2>Lecture 4: writing your own functions</h2>
+<div class="learn"><b>In this lecture</b><ul><li>What a function file is and why there are two files</li><li>The first line of a function</li><li>The exam layout: mainQ2.m calls funQ2.m</li></ul></div>
+<div class="zero"><span class="bt">From zero · what a function is</span>
+<p>You already use functions: <code>sqrt(9)</code> takes 9 and gives back 3. A <b>user-defined function</b> is one you write yourself, in its <b>own file</b>, so the main program can use it as many times as it wants.</p>
+<p>So a function question always has <b>two files</b>:</p>
+<ul><li><b>The function file</b> (e.g. <code>plossfun.m</code>): does one calculation.</li>
+<li><b>The main program</b> (e.g. <code>mainQ2.m</code>): gives it numbers and uses the answer.</li></ul>
+<h4>The first line of a function file</h4><div class="tbl"><table><thead><tr><th>Part of  function [P1,P2,P3]=plossfun(I1,I2,R1,R2,R3)</th><th>Meaning</th></tr></thead><tbody><tr><td><span class="mono">function</span></td><td><span class="mono">the keyword that says "this file is a function"</span></td></tr><tr><td><span class="mono">[P1,P2,P3]</span></td><td><span class="mono">the outputs it gives back (one output needs no brackets)</span></td></tr><tr><td><span class="mono">=</span></td><td><span class="mono"></span></td></tr><tr><td><span class="mono">plossfun</span></td><td><span class="mono">the name; the file must be saved as plossfun.m</span></td></tr><tr><td><span class="mono">(I1,I2,R1,R2,R3)</span></td><td><span class="mono">the inputs it receives</span></td></tr></tbody></table></div>
+<p>Inside, you must give every output a value. The function's variables are private: the main program only sees what is returned.</p>
+<p><b>Calling it</b> from the main program: <code>[a,b,c] = plossfun(2,1,2,2,4)</code>. The values go in by position: 2 → I1, 1 → I2, …</p></div><article class="card" id="n10">
+<div class="q"><div class="src"><span class="chip">Sheet 4&5 Q1</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 4&5 Q1)</figcaption><img src="guide-img/n_s45q1.jpg" alt="As it appears in the sheet (Sheet 4&5 Q1)" loading="lazy"></figure>
+<h3>4.1 · The simplest function: y = x²</h3>
+<p>Write fun4a.m for y = x² and test it from main4a.m with x = 10 and x = 1:10.</p>
+<p class="find">the two files and their output</p>
+</div>
+<div class="paper"><span class="mn">4.1</span>
+<pre class="hand"><span class="c">%% fun4a.m</span>
+function y=fun4a(x)
+y=x.^2;            <span class="c">% .^ so it also works for a vector</span>
+end
+
+<span class="c">%% main4a.m</span>
+clear all, clc
+x=10;
+y1=fun4a(x)
+x=1:10;
+y2=fun4a(x)</pre><div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>y1 =
+   100
+y2 =
+     1     4     9    16    25    36    49    64    81   100</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li>First line: output y, name fun4a, input x.</li><li>The main program never sees the inside of the function, only y.</li><li>Without the dot, <code>x^2</code> would fail for the vector 1:10.</li></ol></div>
+<div class="answer">y1 = 100; y2 = 1 4 9 … 100. Parts b and c are the same with y = exp(1./x) and y = sin(x).</div>
+</article>
+<article class="card" id="s7">
+    <div class="q">
+      <div class="src"><span class="chip hot">Undated mid Q3 [7]</span><span class="chip hot">Mid 2023/24 Q3 [5]</span><span class="chip">Sheet 4 Q2–3</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 2023/24 Q3)</figcaption><img src="guide-img/c8.jpg" alt="Mid 2023/24 Q3" loading="lazy"></figure>
+      <h3>4.2 · The sine series as a function</h3>
+      <p>Write a function that evaluates sin x = x − x³/3! + x⁵/5! − x⁷/7! + … with at least 4 terms (don't name it sin). In mainQ2.m compute y1 at x1 = π and y2 for x2 = 0 : 0.1π : 2π. What if the number of terms is doubled or halved? What do you expect of MATLAB's built-in sin?</p>
+      <dl class="given"><dt>Files</dt><dd>main M-file mainQ2.m, function M-file funQ2.m</dd></dl>
+      <p class="find">the two files, y1, the effect of the number of terms</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+<pre class="hand"><span class="c">%% funQ2.m</span>
+function y=funQ2(x)
+y=x-x.^3/factorial(3)+x.^5/factorial(5)-x.^7/factorial(7);
+end
+
+<span class="c">%% mainQ2.m</span>
+clear all, clc
+x1=pi;
+y1=funQ2(x1)
+x2=0:0.1*pi:2*pi;
+y2=funQ2(x2);
+plot(x2,y2,'-o',x2,sin(x2),'--'), grid on
+legend('4-term series','built-in sin')</pre>
+      <p class="note">general n terms with a loop (Sheet 4 Q3, fun4Q3c):</p>
+<pre class="hand">function y=sinN(x,N)
+y=0;
+for n=0:N-1
+   y=y+(-1)^n*x.^(2*n+1)/factorial(2*n+1);
+end
+end</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>y1 =
+   -0.0752</pre></div>
+      <div class="tbl"><table><thead><tr><th>terms</th><th>x = π (true 0)</th><th>x = 2π (true 0)</th><th>x = π/2 (true 1)</th></tr></thead><tbody>
+        <tr><td>2</td><td>−2.0261</td><td>−35.0585</td><td>0.9248</td></tr>
+        <tr><td>3</td><td>0.5240</td><td>46.5467</td><td>1.0045</td></tr>
+        <tr><td>4</td><td>−0.0752</td><td>−30.1591</td><td>0.9998</td></tr>
+        <tr><td>6</td><td>−0.0004</td><td>−3.1951</td><td>1.0000</td></tr>
+        <tr><td>8</td><td>0.0000</td><td>−0.0932</td><td>1.0000</td></tr>
+        <tr><td>10</td><td>0.0000</td><td>−0.0010</td><td>1.0000</td></tr>
+      </tbody></table></div>
+      <p><b>Doubled terms</b> → more accurate, especially for large x. <b>Halved terms</b> → large error away from x = 0. The error always grows with |x|.</p>
+      <p><b>Built-in sin</b> → accurate to machine precision for any x (it reduces the angle first, then uses an optimised approximation).</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li>The function file holds the formula; <code>.^</code> and <code>./</code> make it work for x = π and for the vector x2.</li><li><code>factorial(3)</code> = 3! = 6.</li><li>The main program calls it twice: once with one number, once with 21 angles.</li><li>Plotting the built-in sin on top shows the error.</li></ol></div>
+<div class="answer">y1 = −0.0752 with 4 terms (true value 0). More terms = smaller error; the built-in sin is exact to about 10⁻¹⁶.</div>
+  </article>
+<article class="card" id="s8">
+    <div class="q">
+      <div class="src"><span class="chip hot">Mid 16-11-2025 Q5</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 16-11-2025 Q5)</figcaption><img src="guide-img/c10.jpg" alt="Mid 16-11-2025 Q5, faded scan" loading="lazy"></figure>
+      <h3>4.3 · Function powerCircuit with if / elseif</h3>
+      <p>Write a function that asks for R and Vmax, makes V = 0 : 1 : Vmax, computes I = V/R and P = V·I, prints a message depending on the maximum power, and plots power against voltage.</p>
+      <dl class="given"><dt>Messages</dt><dd>Pmax &lt; 10 → "Low power circuit"; 10 ≤ Pmax ≤ 50 → "Moderate power circuit"; Pmax &gt; 50 → "High power circuit - check safety!" (the scan is faded here; these are the readable limits)</dd></dl>
+      <p class="find">the function file and its output</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+<pre class="hand">function powerCircuit()
+R=input('Enter the resistance R (ohm) = ');
+Vmax=input('Enter the maximum voltage Vmax (V) = ');
+V=0:1:Vmax;
+I=V/R;
+P=V.*I;                    <span class="c">% element by element</span>
+Pmax=max(P);
+if Pmax&lt;10
+   disp('Low power circuit')
+elseif Pmax&lt;=50
+   disp('Moderate power circuit')
+else
+   disp('High power circuit - check safety!')
+end
+plot(V,P,'-o'), grid on
+xlabel('Voltage (V)'), ylabel('Power (W)')
+title('Power vs Voltage')
+end</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code (example)</span><pre>&gt;&gt; powerCircuit
+Enter the resistance R (ohm) = 10
+Enter the maximum voltage Vmax (V) = 20
+Moderate power circuit</pre></div>
+      <div class="plot sm" id="pl-pv"></div><p class="swipe">Swipe sideways →</p>
+      <p class="note">R = 10 Ω, Vmax = 20 V: P = V²/R is a parabola reaching 40 W, so the message is "Moderate"</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li><code>function powerCircuit()</code>: no inputs or outputs, it asks the user itself.</li><li><code>V=0:1:Vmax</code>, then <code>I=V/R</code> and <code>P=V.*I</code> for every voltage.</li><li>The if / elseif / else picks one of the three messages from Pmax.</li><li>Last, the plot of P against V.</li></ol></div>
+<div class="answer">Pmax = Vmax²/R decides the message: 10 Ω and 5 V → 2.5 W Low; 20 V → 40 W Moderate; 30 V → 90 W High.</div>
+  </article>
+<article class="card" id="s9">
+    <div class="q">
+      <div class="src"><span class="chip">Quiz 2</span></div>
+      <figure class="orig"><figcaption>As it appears in Quiz 2</figcaption><img src="guide-img/c15.jpg" alt="Quiz 2" loading="lazy"></figure>
+      <h3>4.4 · Relay operating time (function + three calls + tables)</h3>
+      <p>IEC standard-inverse relay: t = 0.14·TMS / ((I<sub>f</sub>/I<sub>p</sub>)<sup>0.02</sup> − 1). Write <code>calc_relay_time</code>, call it for relays A, B, C, plot all three curves with different styles, and print a 4-column table for each.</p>
+      <dl class="given"><dt>Given</dt><dd>I_fault = 20 points from 300 to 3000 A; TMS = 0.3, 0.2, 0.1; I<sub>p</sub> = 200 A</dd></dl>
+      <p class="find">function, plot, tables</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+<pre class="hand"><span class="c">%% calc_relay_time.m</span>
+function t=calc_relay_time(I_fault,TMS,I_p)
+t=0.14*TMS./((I_fault/I_p).^0.02-1);
+end
+
+<span class="c">%% main script</span>
+clear all, clc
+I_fault=linspace(300,3000,20);
+tA=calc_relay_time(I_fault,0.3,200);
+tB=calc_relay_time(I_fault,0.2,200);
+tC=calc_relay_time(I_fault,0.1,200);
+plot(I_fault,tA,'-ob',I_fault,tB,'--sr',I_fault,tC,':^k')
+title('IEC standard inverse relays'), xlabel('I_{fault} (A)')
+ylabel('t (s)'), legend('Relay A','Relay B','Relay C'), grid on
+n=length(I_fault);
+disp('Relay A operating time')
+TA=[I_fault' 0.3*ones(n,1) 200*ones(n,1) tA']
+disp('Relay B operating time')
+TB=[I_fault' 0.2*ones(n,1) 200*ones(n,1) tB']
+disp('Relay C operating time')
+TC=[I_fault' 0.1*ones(n,1) 200*ones(n,1) tC']</pre>
+      <div class="plot sm" id="pl-relay"></div><p class="swipe">Swipe sideways →</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li><code>./</code> and <code>.^</code> because I_fault is a vector of 20 values.</li><li>Same function, called three times with different TMS.</li><li><code>0.3*ones(n,1)</code> makes a column of 0.3s so every table has 4 columns of equal length.</li></ol></div>
+<div class="answer">At 300 A: t<sub>A</sub> = 5.158 s, t<sub>B</sub> = 3.439 s, t<sub>C</sub> = 1.719 s; at 3000 A: 0.755, 0.503, 0.252 s. Time ∝ TMS, so the curves keep the same shape.</div>
+  </article>
+<article class="card" id="n11">
+<div class="q"><div class="src"><span class="chip">Quiz Ch 4&5</span><span class="chip">In Lecture 5 slides</span></div>
+<figure class="orig"><figcaption>As it appears in the lecture (Quiz Ch 4 &amp; 5)</figcaption><img src="guide-img/n_quiz45.jpg" alt="As it appears in the lecture (Quiz Ch 4 &amp; 5)" loading="lazy"></figure>
+<h3>4.5 · Delta to star (Δ → Y) with a function</h3>
+<p>Δ network: R1 between A–B, R2 between B–C, R3 between C–A.</p>
+<p class="find">deltay.m, mainDeltay.m, R<sub>AB</sub> for both networks</p>
+</div>
+<div class="paper"><span class="mn">4.5</span>
+<div class="calc"><span>R<sub>A</sub></span><span>= R1·R3 / (R1+R2+R3)</span><span>R<sub>B</sub></span><span>= R1·R2 / (R1+R2+R3)</span><span>R<sub>C</sub></span><span>= R2·R3 / (R1+R2+R3)</span><span>R<sub>AB</sub> (Δ)</span><span>= R1 ∥ (R2 + R3)</span><span>R<sub>AB</sub> (Y)</span><span>= R<sub>A</sub> + R<sub>B</sub> (C left open)</span></div><pre class="hand"><span class="c">%% deltay.m</span>
+function [RA,RB,RC]=deltay(R1,R2,R3)
+S=R1+R2+R3;
+RA=R1*R3/S;   RB=R1*R2/S;   RC=R2*R3/S;
+end
+
+<span class="c">%% mainDeltay.m</span>
+clear all, clc
+R1=input('R1 = ');  R2=input('R2 = ');  R3=input('R3 = ');
+[RA,RB,RC]=deltay(R1,R2,R3)
+Rab_delta=R1*(R2+R3)/(R1+R2+R3)
+Rab_star=RA+RB</pre><div class="screen"><span class="sh">Output: write this on paper under your code (example: 10, 20, 30 Ω)</span><pre>R1 = 10
+R2 = 20
+R3 = 30
+RA =  5     RB =  3.3333     RC =  10
+Rab_delta =  8.3333
+Rab_star  =  8.3333</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li>Each star resistor = product of the two Δ resistors touching that corner ÷ sum of all three.</li><li>Between A and B in the Δ: R1 directly, in parallel with the path R2 + R3.</li><li>In the star, the path A → centre → B is R<sub>A</sub> + R<sub>B</sub>.</li></ol></div>
+<div class="answer">Both networks give the same R<sub>AB</sub> (8.333 Ω for 10, 20, 30 Ω): that is the check that the conversion is right.</div>
+</article>
+<div class="box mem"><span class="bt">Memorise</span><div class="tbl memt"><table><thead><tr><th>Write this</th><th>It means</th><th>Example</th></tr></thead><tbody><tr><td><span class="mono">function y = name(x)</span></td><td>First line of a function file; save it as name.m</td><td></td></tr><tr><td><span class="mono">function [a,b] = name(x,y)</span></td><td>Two inputs and two outputs</td><td></td></tr><tr><td><span class="mono">y1 = name(pi)</span></td><td>Call the function from the main program</td><td></td></tr><tr><td><span class="mono">.^   .*   ./</span></td><td>Use the dot versions inside, so a vector x works</td><td><span class="mono">x.^3</span></td></tr><tr><td><span class="mono">factorial(n)</span></td><td>n!  (not allowed in the factorial question itself)</td><td><span class="mono">factorial(5) → 120</span></td></tr></tbody></table></div></div>
+<div class="box trap"><span class="bt">Exam traps</span>
+    <ul class="tight">
+      <li>Use <code>.^ .* ./</code> inside functions so a vector input works (the exam always tests x = π <i>and</i> x = 0:0.1π:2π).</li>
+      <li>Every output named on the first line must get a value inside the function.</li>
+      <li>Calling with fewer outputs (<code>y=motion(t)</code>) returns only the first output.</li>
+    </ul></div>
+<div class="navrow"><a href="#l3">← Lecture 3</a><a href="#l5">Lecture 5 →</a></div>
+</section>
+
+<section class="sec" id="l5">
+<p class="eyebrow">Lecture 5 · User-Controlled Input and Output</p>
+<h2>Lecture 5: asking the user and printing results</h2>
+<div class="learn"><b>In this lecture</b><ul><li>input: ask the user for a value</li><li>disp and fprintf: print text, numbers and tables</li></ul><p class="muted">Almost every exam question ends with "use disp and fprintf", so learn the fprintf pattern well.</p></div>
+<div class="zero"><span class="bt">From zero · input, disp, fprintf</span>
+<h4>input: the program stops and waits</h4>
+<p><code>R = input('Enter R = ');</code> shows the text <i>Enter R =</i>; whatever the user types is stored in R. For text, add <code>'s'</code>: <code>name = input('Name: ','s');</code></p>
+<h4>disp: print as it is</h4>
+<p><code>disp('Results')</code> prints the text. <code>disp(x)</code> prints the value of x without the "x =" line.</p>
+<h4>fprintf: print with numbers placed inside text</h4>
+<p>Write the sentence, and put a <b>placeholder</b> where each number goes. The numbers come after the comma, in order.</p><div class="tbl"><table><thead><tr><th>You write</th><th>Prints / means</th></tr></thead><tbody><tr><td><span class="mono">fprintf('V = %8.2f volt\n', 3.5)</span></td><td><span class="mono">V =     3.50 volt</span></td></tr><tr><td><span class="mono">%8.2f</span></td><td><span class="mono">a number, 8 characters wide, 2 decimals</span></td></tr><tr><td><span class="mono">%d</span></td><td><span class="mono">a whole number</span></td></tr><tr><td><span class="mono">%e</span></td><td><span class="mono">exponential: 3.500000e+00</span></td></tr><tr><td><span class="mono">%s</span></td><td><span class="mono">text</span></td></tr><tr><td><span class="mono">\n</span></td><td><span class="mono">go to a new line (without it, the next print continues on the same line)</span></td></tr><tr><td><span class="mono">fprintf('%d %d\n', a, b)</span></td><td><span class="mono">two placeholders take a and b in order</span></td></tr></tbody></table></div>
+<h4>Printing a table: the doctor's pattern</h4>
+<p>fprintf takes numbers from a matrix <b>column by column</b> and repeats the sentence until the numbers run out. To print each <b>row</b> of a table on one line, give it the transpose: <code>fprintf('%6.2f %8.4f\n', Table')</code>.</p>
+<pre class="code">feet=1:3;  inches=feet*12;
+Table=[feet' inches']          % rows: 1 12 / 2 24 / 3 36
+fprintf('%4.0f %7.2f\n',Table')
+   1   12.00
+   2   24.00
+   3   36.00
+fprintf('%4.0f %7.2f\n',feet,inches)   % WRONG pairing: numbers taken as 1 2 3 12 24 36
+   1    2.00
+   3   12.00
+  24   36.00</pre>
+<p><b>Complex numbers</b>: one %f prints only the real part. Print both parts: <code>fprintf('I = %f %+fj\n', real(I), imag(I))</code> (the + makes the sign always show).</p></div><article class="card" id="n12">
+<div class="q"><div class="src"><span class="chip">Sheet 4&5 Q6</span><span class="chip">Solved in Lecture 5</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 4&5 Q6)</figcaption><img src="guide-img/n_s45q6.jpg" alt="As it appears in the sheet (Sheet 4&5 Q6)" loading="lazy"></figure>
+<h3>5.1 · Power flow between two buses (function + fprintf)</h3>
+<p>Write fun4Q6.m for P<sub>ij</sub> and Q<sub>ij</sub>, then call it from main4Q6.m for the four cases.</p>
+<p class="find">P12 and Q12 for cases a–d</p>
+</div>
+<div class="paper"><span class="mn">5.1</span>
+<pre class="hand"><span class="c">%% fun4Q6.m</span>
+function [P,Q]=fun4Q6(V1,d1,V2,d2,Z12,Th12)
+P=(V1/Z12)*(V1*cos(Th12)-V2*cos(d2-d1-Th12));
+Q=(V1/Z12)*(V1*sin(Th12)+V2*sin(d2-d1-Th12));
+end
+
+<span class="c">%% main4Q6.m  (case b shown; repeat for a, c, d)</span>
+clear all, clc
+z12=0.05+j*0.4;  Z12=abs(z12);  Th12=angle(z12);
+V1=1; d1=90/180*pi;  V2=1; d2=0/180*pi;
+[P12b,Q12b]=fun4Q6(V1,d1,V2,d2,Z12,Th12);
+disp('===power flow from bus 1 to bus 2 for case_b===')
+fprintf('P12b=%8.4f      Q12b=%8.4f \n',P12b,Q12b)</pre><div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>===power flow from bus 1 to bus 2 for case_a===
+P12a=  0.0000      Q12a=  0.0000
+===power flow from bus 1 to bus 2 for case_b===
+P12b=  2.7692      Q12b=  2.1538
+===power flow from bus 1 to bus 2 for case_c===
+P12c= -2.1538      Q12c=  2.7692
+===power flow from bus 1 to bus 2 for case_d===
+P12d=  0.4446      Q12d= -0.2638</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li>Angles must be in radians for cos and sin: degrees × π/180.</li><li><code>abs</code> and <code>angle</code> split Z into |Z| and θ.</li><li>fprintf with two placeholders prints P and Q on one line.</li></ol></div>
+<div class="answer">Equal voltages → no flow. Active power flows from the bus whose angle leads; reactive power flows toward the bus with the lower voltage.</div>
+</article>
+<div class="box mem"><span class="bt">Memorise</span><div class="tbl memt"><table><thead><tr><th>Write this</th><th>It means</th><th>Example</th></tr></thead><tbody><tr><td><span class="mono">x = input(&#x27;Enter x = &#x27;)</span></td><td>Ask the user for a number or a matrix</td><td></td></tr><tr><td><span class="mono">s = input(&#x27;Name: &#x27;,&#x27;s&#x27;)</span></td><td>Ask the user for text</td><td></td></tr><tr><td><span class="mono">disp(&#x27;text&#x27;)   disp(x)</span></td><td>Show a line of text / a value</td><td></td></tr><tr><td><span class="mono">fprintf(&#x27;V = %8.2f V\n&#x27;, V)</span></td><td>Print V, 8 spaces wide, 2 decimals, then a new line</td><td><span class="mono">V =     3.50 V</span></td></tr><tr><td><span class="mono">%f   %d   %e   %s</span></td><td>Decimal number / integer / exponential / text</td><td></td></tr><tr><td><span class="mono">num2str(x)</span></td><td>Turn a number into text</td><td><span class="mono">disp([&#x27;P = &#x27; num2str(P)])</span></td></tr><tr><td><span class="mono">menu(&#x27;title&#x27;,&#x27;A&#x27;,&#x27;B&#x27;)</span></td><td>Show buttons; gives 1 or 2</td><td></td></tr></tbody></table></div></div>
+<details class="yt"><summary><span class="yt-label">Try it yourself</span>Write the exact output</summary><div class="ytq"><pre class="code">x=1:3;
+fprintf('%6.2f\n',x)
+ampere=5;
+fprintf('There are %f ampere in the conductor\n',ampere)
+disp(['The values are: ' num2str(x)])</pre><pre class="code">  1.00
+  2.00
+  3.00
+There are 5.000000 ampere in the conductor
+The values are: 1  2  3</pre></div></details><div class="navrow"><a href="#l4">← Lecture 4</a><a href="#l6">Lecture 6 →</a></div>
+</section>
+
+<section class="sec" id="l6">
+<p class="eyebrow">Lecture 6 · Logical Functions and Selection Structures</p>
+<h2>Lecture 6: making decisions (if, switch, logic gates)</h2>
+<div class="learn"><b>In this lecture</b><ul><li>True / false as 1 / 0</li><li>find: where a condition is true</li><li>if / elseif / else and switch</li><li>The doctor's "wrong input → warn → try again → stop" pattern</li><li>Logic gates and truth tables</li></ul></div>
+<div class="zero"><span class="bt">From zero · true, false and if</span>
+<p>A comparison is a question with a yes/no answer. MATLAB writes <b>yes as 1</b> and <b>no as 0</b>.</p><div class="tbl"><table><thead><tr><th>You write</th><th>Answer</th></tr></thead><tbody><tr><td><span class="mono">5 &gt; 3</span></td><td><span class="mono">1</span></td></tr><tr><td><span class="mono">5 == 3</span></td><td><span class="mono">0 (== asks "equal?"; a single = stores)</span></td></tr><tr><td><span class="mono">5 ~= 3</span></td><td><span class="mono">1 (~= means "not equal")</span></td></tr><tr><td><span class="mono">[1 8 3] &gt; 2</span></td><td><span class="mono">0 1 1 (one answer per element)</span></td></tr><tr><td><span class="mono">find([1 8 3] &gt; 2)</span></td><td><span class="mono">2 3 (the positions of the 1s)</span></td></tr><tr><td><span class="mono">(5&gt;3) &amp; (2&gt;4)</span></td><td><span class="mono">0 (AND: both must be true)</span></td></tr><tr><td><span class="mono">(5&gt;3) | (2&gt;4)</span></td><td><span class="mono">1 (OR: at least one true)</span></td></tr><tr><td><span class="mono">~(5&gt;3)</span></td><td><span class="mono">0 (NOT flips it)</span></td></tr></tbody></table></div>
+<h4>if reads like English</h4>
+<pre class="code">if P &lt; 10                     % if this is true...
+   disp('Low')                %    ...do this
+elseif P &lt;= 50                % otherwise, if this is true...
+   disp('Moderate')
+else                          % otherwise (none of the above)
+   disp('High')
+end                           % every if needs an end</pre>
+<p>Only <b>one</b> block runs: the first whose condition is true.</p>
+<h4>The input-checking pattern (asked again and again)</h4>
+<pre class="code">a=input('The value of a = ');
+if a~=1 &amp;&amp; a~=0                       % wrong value?
+   disp('Not allowed value, please re-enter (1 or 0)')
+   a=input('The value of a = ');       % second chance
+   if a~=1 &amp;&amp; a~=0                    % still wrong?
+      disp('Not allowed value, the program should be breaked')
+      return                           % stop the whole program
+   end
+end</pre>
+<p><b>Logic gates are just these operators</b> on 0/1 values: AND <code>a&amp;b</code>, OR <code>a|b</code>, NOT <code>~a</code>, XOR <code>xor(a,b)</code>. A truth table is all the input combinations written as columns, with the formula applied to whole columns at once.</p></div><article class="card" id="n13">
+<div class="q"><div class="src"><span class="chip">Sheet 6 Q1</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 6 Q1)</figcaption><img src="guide-img/n_s6q1.jpg" alt="As it appears in the sheet (Sheet 6 Q1)" loading="lazy"></figure>
+<h3>6.1 · find with conditions</h3>
+<p>Shown for matrix x; y and z work the same way.</p>
+<p class="find">positions, row/column numbers and values that meet each condition</p>
+</div>
+<div class="paper"><span class="mn">6.1</span>
+<pre class="hand">x=[1 10 42 6;5 8 78 23;56 45 9 13;23 22 8 9];
+%% a, b, c   greater than 10
+k=find(x&gt;10)'          <span class="c">% single index, counted down the columns</span>
+[r,c]=find(x&gt;10);      <span class="c">% row and column numbers</span>
+v=x(x&gt;10)'             <span class="c">% the values themselves</span>
+%% d, e, f   between 10 and 40
+k2=find(x&gt;10 &amp; x&lt;40)'
+v2=x(x&gt;10 &amp; x&lt;40)'
+%% g, h   0-10 or 70-80
+k3=find((x&gt;=0 &amp; x&lt;=10) | (x&gt;=70 &amp; x&lt;=80))';
+n=length(k3)</pre><div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>k  =   3   4   7   8   9  10  14  15
+v  =  56  23  45  22  42  78  23  13
+k2 =   4   8  14  15
+v2 =  23  22  23  13
+n  =   9</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li>Single index counts down column 1 (1, 5, 56, 23 = positions 1–4), then column 2, and so on.</li><li><code>x(x&gt;10)</code> keeps only the elements where the condition is 1.</li><li><code>&amp;</code> joins two conditions that must both hold; <code>|</code> needs at least one.</li></ol></div>
+<div class="answer">8 values above 10; 4 values between 10 and 40; 9 values in 0–10 or 70–80.</div>
+</article>
+<article class="card" id="s11">
+    <div class="q">
+      <div class="src"><span class="chip">Sheet 6 Q2–7, Q9</span><span class="chip">Finals</span></div>
+      <figure class="orig"><figcaption>As it appears in the sheet (Sheet 6 Q2)</figcaption><img src="guide-img/c14.jpg" alt="Sheet 6 Q2 with sample outputs" loading="lazy"></figure>
+      <h3>6.2 · Two-input AND gate, written in the doctor's style</h3>
+      <p>Same checking rules as card 6.3, output displayed as "AND gate output A.B=1". Change one line for OR, XOR, NAND… and stack 3 inputs for the 3×8 decoder.</p>
+      <p class="find">the program</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+<pre class="hand">clear all, clc
+disp('Enter the value of the two inputs a and b');
+%% enter variable a
+disp('a = 1 or 0')
+a=input('The value of variable a=')
+if a==1 || a==0
+else
+   disp('Not allowed value, please re-enter a correct value of a (1 or 0)')
+   a=input('The value of variable a=')
+   if a==1 || a==0
+   else
+      disp('Not allowed value, the program should be ended')
+      return
+   end
+end
+<span class="c">%% enter variable b  (same block with b)</span>
+%% AND gate
+if a==1 &amp; b==1
+   F=1
+else
+   F=0
+end
+%% Display output
+disp('AND gate output')
+fprintf('A.B=%1.0f\n',F)</pre>
+      <p class="note">OR: F=a|b · XOR: F=xor(a,b) · 4-input OR: F=a|b|c|d · decoder: D0=~a&amp;~b&amp;~c; … D7=a&amp;b&amp;c;</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li><code>if a==1 || a==0</code> with an empty first branch: "if it is fine, do nothing, else…" (the doctor's style).</li><li><code>return</code> ends the program after the second wrong value.</li><li><code>a==1 &amp; b==1</code>: AND is 1 only when both inputs are 1.</li><li>Change only the gate line for OR, XOR, NAND…</li></ol></div>
+<div class="answer">a = 1, b = 1 → "AND gate output / A.B=1". A second invalid entry stops the program with <code>return</code>.</div>
+  </article>
+<article class="card" id="s10">
+    <div class="q">
+      <div class="src"><span class="chip must">MUST DO</span><span class="chip hot">Mid 16-11-2025 Q4</span><span class="chip">Final 2022 Q3</span><span class="chip">Sheet 6 Q8 + Q2</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 16-11-2025 Q4)</figcaption><img src="guide-img/c9.jpg" alt="Mid 16-11-2025 Q4" loading="lazy"></figure>
+      <h3>6.3 · Truth table of F = xy + xy' + y'z with input checking</h3>
+      <p>Ask the user for x, y, z (each 1 or 0). A wrong value gives the warning "Not allowed value, please re-enter a correct value (1 or 0)" and one more try. A second wrong value ends the program with "Not allowed value the program should be breaked". Print F for the inputs and the complete truth table.</p>
+      <p class="find">the program and the truth table</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+      <p>Simplify first (shows you understand; the program uses the original form):</p>
+      <div class="calc"><span>F</span><span>= x(y + y') + y'z = x + y'z</span></div>
+<pre class="hand">clear all, clc
+disp('Enter the value of the three inputs x, y and z')
+%% enter x  (repeat this block for y and z)
+x=input('The value of variable x = ');
+if x~=1 &amp;&amp; x~=0
+   disp('Not allowed value, please re-enter a correct value (1 or 0)')
+   x=input('The value of variable x = ');
+   if x~=1 &amp;&amp; x~=0
+      disp('Not allowed value the program should be breaked')
+      return
+   end
+end
+<span class="c">%% ... same block for y and for z ...</span>
+%% output for the entered values
+F=(x&amp;y)|(x&amp;~y)|(~y&amp;z);
+fprintf('x=%d  y=%d  z=%d   -->   F=%d\n',x,y,z,F)
+%% complete truth table
+X=[0;0;0;0;1;1;1;1];  Y=[0;0;1;1;0;0;1;1];  Z=[0;1;0;1;0;1;0;1];
+FT=(X&amp;Y)|(X&amp;~Y)|(~Y&amp;Z);
+disp('   x   y   z   ||   F')
+fprintf('%4d%4d%4d   ||%4d\n',[X Y Z FT]')</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code (user enters 1, 0, 1)</span><pre>Enter the value of the three inputs x, y and z
+The value of variable x = 1
+The value of variable y = 0
+The value of variable z = 1
+x=1  y=0  z=1   -->   F=1
+   x   y   z   ||   F
+   0   0   0   ||   0
+   0   0   1   ||   1
+   0   1   0   ||   0
+   0   1   1   ||   0
+   1   0   0   ||   1
+   1   0   1   ||   1
+   1   1   0   ||   1
+   1   1   1   ||   1</pre></div>
+      <pre class="mermaid">flowchart TD
+  S([Start]) --> I[/Input x/]
+  I --> D1{x = 1 or 0?}
+  D1 -- yes --> N[Next variable]
+  D1 -- no --> W[/Warning, input x again/]
+  W --> D2{x = 1 or 0?}
+  D2 -- yes --> N
+  D2 -- no --> E[/Program breaked/] --> X([End])
+  N --> C["F = x·y + x·y' + y'·z"] --> O[/Print F and truth table/] --> X</pre>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li>One checking block per variable (x, y, z): wrong → warn → re-enter → still wrong → <code>return</code>.</li><li>F written directly from the formula: xy → <code>x&amp;y</code>, y' → <code>~y</code>, + → <code>|</code>.</li><li>Truth table: X, Y, Z are the 8 input rows as columns; the same formula works on whole columns.</li><li><code>[X Y Z FT]'</code> + fprintf prints one row per line.</li></ol></div>
+<div class="answer">F = x + y'z: F = 0 only for 000, 010, 011. Verified by enumerating all 8 rows in code.</div>
+  </article>
+<article class="card" id="n14">
+<div class="q"><div class="src"><span class="chip">Sheet 6 Q9</span><span class="chip">Solved in Lecture 6</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 6 Q9)</figcaption><img src="guide-img/n_s6q9.jpg" alt="As it appears in the sheet (Sheet 6 Q9)" loading="lazy"></figure>
+<h3>6.4 · 3 × 8 decoder</h3>
+<p>Read a, b, c with the same checks as 6.2, print D0…D7, then print the full truth table.</p>
+<p class="find">the program</p>
+</div>
+<div class="paper"><span class="mn">6.4</span>
+<pre class="hand"><span class="c">%% read a, b, c with the checking block from 6.2</span>
+%% Decoder outputs calculations
+D0=~a&amp;~b&amp;~c;   D1=~a&amp;~b&amp;c;   D2=~a&amp;b&amp;~c;   D3=~a&amp;b&amp;c;
+D4=a&amp;~b&amp;~c;    D5=a&amp;~b&amp;c;    D6=a&amp;b&amp;~c;    D7=a&amp;b&amp;c;
+%% Display result
+disp('  a  b  c  ||  D0 D1 D2 D3 D4 D5 D6 D7')
+fprintf('%3.0f%3.0f%3.0f  ||%3.0f%3.0f%3.0f%3.0f%3.0f%3.0f%3.0f%3.0f\n', ...
+        [a,b,c,D0,D1,D2,D3,D4,D5,D6,D7])
+%% Display truth table
+disp('Truth table of 3x8 decoder')
+a=[0;0;0;0;1;1;1;1];  b=[0;0;1;1;0;0;1;1];  c=[0;1;0;1;0;1;0;1];
+D=eye(8);               <span class="c">% one 1 per row (the lecture types the 8 columns)</span>
+fprintf('%3.0f%3.0f%3.0f  ||%3.0f%3.0f%3.0f%3.0f%3.0f%3.0f%3.0f%3.0f\n',[a b c D]')</pre><div class="screen"><span class="sh">Output: write this on paper under your code (user enters 1, 0, 0)</span><pre>  a  b  c  ||  D0 D1 D2 D3 D4 D5 D6 D7
+  1  0  0  ||  0  0  0  0  1  0  0  0
+Truth table of 3x8 decoder
+  0  0  0  ||  1  0  0  0  0  0  0  0
+  0  0  1  ||  0  1  0  0  0  0  0  0
+  ...
+  1  1  1  ||  0  0  0  0  0  0  0  1</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li>Each output is 1 for exactly one input pattern: a 0 in the pattern becomes ~, a 1 stays as it is.</li><li><code>eye(8)</code> (extra, not from the slides) is the 8 × 8 table with 1s on the diagonal: exactly the decoder outputs.</li><li>The transpose <code>[a b c D]'</code> makes fprintf print one row per line.</li></ol></div>
+<div class="answer">Input 100 (binary 4) makes D4 = 1 and all others 0.</div>
+</article>
+<article class="card" id="n15">
+<div class="q"><div class="src"><span class="chip">Sheet 6 Q11–12</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 6 Q11)</figcaption><img src="guide-img/n_s6q11.jpg" alt="As it appears in the sheet (Sheet 6 Q11)" loading="lazy"></figure>
+<h3>6.5 · Flowchart to code with switch (gasoline cost)</h3>
+<p>Cost = volume × factor × $2.89 per gallon (1 litre = 0.264 gallon).</p>
+<p class="find">the program with switch (b); the menu version (Q12)</p>
+</div>
+<div class="paper"><span class="mn">6.5</span>
+<pre class="hand">clear all, clc
+rate=2.89;                                <span class="c">% $ per gallon</span>
+unit=input('Enter gallons or liters: ','s');
+switch unit
+   case 'gallons'
+      factor=1;
+   case 'liters'
+      factor=0.264;
+   otherwise
+      factor=0;
+      disp('Not available')
+end
+if factor~=0
+   volume=input('Enter the amount of gasoline: ');
+   cost=volume*factor*rate;
+   fprintf('The cost is $%.2f\n',cost)
+end
+<span class="c">%% Q12 menu version: replace the input + switch with</span>
+choice=menu('Select the unit','gallons','liters');
+switch choice
+   case 1, factor=1;
+   case 2, factor=0.264;
+end</pre><div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>Enter gallons or liters: liters
+Enter the amount of gasoline: 10
+The cost is $7.63</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li><code>'s'</code> in input reads text, needed to compare with 'gallons'.</li><li>switch jumps straight to the matching case; otherwise catches anything else.</li><li><code>menu</code> shows buttons and returns 1 or 2, so the cases become numbers.</li></ol></div>
+<div class="answer">10 litres → 10 × 0.264 × 2.89 = $7.63; 10 gallons → $28.90. For the if/else version (part a) compare text with <code>strcmp(unit,'gallons')</code> (extra, not from the slides).</div>
+</article>
+<div class="box mem"><span class="bt">Memorise</span><div class="tbl memt"><table><thead><tr><th>Write this</th><th>It means</th><th>Example</th></tr></thead><tbody><tr><td><span class="mono">==   ~=   &lt;   &lt;=   &gt;   &gt;=</span></td><td>Compare: gives 1 (true) or 0 (false)</td><td><span class="mono">5&lt;1 → 0</span></td></tr><tr><td><span class="mono">&amp;   |   ~</span></td><td>AND, OR, NOT (&amp;&amp; and || for single values in if)</td><td></td></tr><tr><td><span class="mono">xor(a,b)</span></td><td>Exclusive OR;  ~xor(a,b) = XNOR</td><td></td></tr><tr><td><span class="mono">find(x&gt;10)</span></td><td>Positions where the condition is true</td><td></td></tr><tr><td><span class="mono">if … elseif … else … end</span></td><td>Run only one of several blocks</td><td></td></tr><tr><td><span class="mono">switch … case … otherwise … end</span></td><td>Choose a block by the value of a variable</td><td></td></tr><tr><td><span class="mono">return</span></td><td>Stop the program (after the second wrong input)</td><td></td></tr></tbody></table></div></div>
+<div class="box trap"><span class="bt">Exam traps</span>
+    <ul class="tight">
+      <li><code>if</code> on a vector is true only if <b>all</b> elements are true: <code>age2=[15,17,25,55,75]; if age2&lt;16</code> is false, and so are the <code>&lt;18</code> and <code>&lt;70</code> tests, so the slide prints "Drivers over 70 require a special license".</li>
+      <li><code>a==1 || a==0</code> means "a is valid". Its opposite is <code>a~=1 &amp;&amp; a~=0</code>, not <code>a~=1 || a~=0</code>.</li>
+      <li><code>=</code> assigns, <code>==</code> compares.</li>
+      <li>A text input needs <code>input('..','s')</code> before a switch on strings.</li>
+    </ul></div>
+<div class="navrow"><a href="#l5">← Lecture 5</a><a href="#l7">Lecture 7 →</a></div>
+</section>
+
+<section class="sec" id="l7">
+<p class="eyebrow">Lecture 7 · Repetition Structures</p>
+<h2>Lecture 7: repeating with for and while</h2>
+<div class="learn"><b>In this lecture</b><ul><li>for: repeat a known number of times</li><li>while: repeat until something changes</li><li>Counters, running sums, factorial</li><li>Tracing a loop by hand in a table (exam question type)</li></ul></div>
+<div class="zero"><span class="bt">From zero · how a loop runs</span>
+<p>A loop repeats the lines between its first line and <code>end</code>.</p>
+<pre class="code">for k = 1:4          % k takes 1, then 2, then 3, then 4
+   s(k) = k^2;       % this line runs 4 times
+end                  % s = 1 4 9 16</pre>
+<pre class="code">n = 0;               % start value
+while n &lt; 3          % check: is n &lt; 3 ?  yes -> run the body
+   n = n + 1         % prints n = 1, n = 2, n = 3
+end                  % after n = 3 the check fails -> stop</pre>
+<h4>The tracing table: how to "execute" a loop on paper</h4>
+<p>Make one column per variable and one row per pass. Example: count the scores above 90 in [76 45 98 97]:</p><div class="tbl"><table><thead><tr><th>k</th><th>scores(k)</th><th>&gt; 90?</th><th>count</th></tr></thead><tbody><tr><td><span class="mono">start</span></td><td><span class="mono">—</span></td><td><span class="mono">—</span></td><td><span class="mono">0</span></td></tr><tr><td><span class="mono">1</span></td><td><span class="mono">76</span></td><td><span class="mono">no</span></td><td><span class="mono">0</span></td></tr><tr><td><span class="mono">2</span></td><td><span class="mono">45</span></td><td><span class="mono">no</span></td><td><span class="mono">0</span></td></tr><tr><td><span class="mono">3</span></td><td><span class="mono">98</span></td><td><span class="mono">yes</span></td><td><span class="mono">1</span></td></tr><tr><td><span class="mono">4</span></td><td><span class="mono">97</span></td><td><span class="mono">yes</span></td><td><span class="mono">2</span></td></tr></tbody></table></div>
+<p><b>Three patterns cover most questions:</b> a counter (<code>count=0; … count=count+1;</code>), a running sum (<code>s=0; … s=s+x(k);</code>) and a running product (<code>fac=1; … fac=fac*m;</code>). Always set the start value <b>before</b> the loop.</p>
+<p><code>break</code> leaves the loop at once. <code>continue</code> skips the rest of this pass and goes to the next one.</p></div><article class="card" id="n16">
+<div class="q"><div class="src"><span class="chip">Sheet 7 Q1</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 7 Q1)</figcaption><img src="guide-img/n_s7q1.jpg" alt="As it appears in the sheet (Sheet 7 Q1)" loading="lazy"></figure>
+<h3>7.1 · Read a for-loop flowchart: degrees to radians</h3>
+<p>Write the for loop for the flowchart and say what it does.</p>
+<p class="find">the program and its objective</p>
+</div>
+<div class="paper"><span class="mn">7.1</span>
+<pre class="hand">clear all, clc
+for k=1:36
+   deg(k)=k*10;
+   rad(k)=deg(k)*pi/180;
+end
+table=[deg' rad'];
+disp('  degrees    radians')
+fprintf('%8.0f %10.4f\n',table')</pre><div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>  degrees    radians
+      10     0.1745
+      20     0.3491
+      30     0.5236
+     ...
+     360     6.2832</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li>The diamond "for k=1:36" becomes the for line; the rectangle becomes the two lines inside.</li><li>After the loop: build the table and print it (the parallelogram = output).</li></ol></div>
+<div class="answer">Objective: a conversion table from degrees to radians, 10° to 360° in steps of 10°.</div>
+</article>
+<article class="card" id="n17">
+<div class="q"><div class="src"><span class="chip">Sheet 7 Q4–5</span><span class="chip">Solved in Lecture 7</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 7 Q4)</figcaption><img src="guide-img/n_s7q4.jpg" alt="As it appears in the sheet (Sheet 7 Q4)" loading="lazy"></figure>
+<h3>7.2 · Counter, find, running sum, series</h3>
+<p>x = 345, 23, 17, 34, 85, 334. One program for a–e.</p>
+<p class="find">a–e</p>
+</div>
+<div class="paper"><span class="mn">7.2</span>
+<pre class="hand">clear all, clc
+x=[345 23 17 34 85 334];
+%% a  counter
+k=0;
+for m=1:length(x)
+   if x(m)&gt;30
+      k=k+1;
+   end
+end
+fprintf('values greater than 30 = %d\n',k)
+%% b  find
+k2=length(find(x&gt;30))
+%% c  sum
+s=0;
+for m=1:length(x)
+   s=s+x(m);
+end
+fprintf('for-loop sum = %d, sum function = %d\n',s,sum(x))
+%% d, e  series
+for k=1:10
+   h(k)=1/k;
+   alt(k)=(-1)^(k+1)/k;
+end
+h, alt</pre><div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>values greater than 30 = 4
+k2 =  4
+for-loop sum = 838, sum function = 838
+h   = 1.0000  0.5000  0.3333  0.2500 ... 0.1000
+alt = 1.0000 -0.5000  0.3333 -0.2500 ... -0.1000</pre></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li><code>length(x)</code> = 6, so the loop runs 6 times.</li><li><code>(-1)^(k+1)</code> is +1 for odd k and −1 for even k: that makes the signs alternate.</li></ol></div>
+<div class="answer">4 values above 30 (345, 34, 85, 334); sum = 838. Q5 asks the same with while: <code>m=1; while m&lt;=length(x) … m=m+1; end</code>.</div>
+</article>
+<article class="card" id="s12">
+    <div class="q">
+      <div class="src"><span class="chip must">MUST DO</span><span class="chip hot">Mid 2024/25 Q1</span><span class="chip hot">Mid 2020 Q5</span><span class="chip">Sheet 7 Q2–3</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 2024/25 Q1)</figcaption><img src="guide-img/c11.jpg" alt="Mid 2024/25 Q1 with required outputs" loading="lazy"></figure>
+      <h3>7.3 · Factorial of entered positive integers (without factorial) + flowchart</h3>
+      <p>The user enters one value or a vector. Every value must be a positive integer, otherwise warn and re-enter; a second wrong entry ends the program. Print each factorial as shown in the exam.</p>
+      <p class="find">the program, the output for x = [5 4 3 20], the flowchart</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+<pre class="hand">clear all, clc
+disp('Enter a positive and integer value/s of variable x')
+x=input('The value of variable x = ')
+if any(x&lt;=0 | round(x)~=x)
+   disp('Not allowed value, re-enter a positive and integer value/s')
+   x=input('The value of variable x = ')
+   if any(x&lt;=0 | round(x)~=x)
+      disp('Not correct entered value/s, the program should be ended')
+      return
+   end
+end
+disp('======== Program Output ========')
+disp('Factorial of variable x')
+for k=1:length(x)
+   fac=1;
+   for m=1:x(k)
+      fac=fac*m;
+   end
+   fprintf(' For x= %8.0f -----  The factorial= %8.0f\n',x(k),fac)
+end</pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>Enter a positive and integer value/s of variable x
+The value of variable x = [5 4 3 20]
+x =
+     5     4     3    20
+======== Program Output ========
+Factorial of variable x
+ For x=        5 -----  The factorial=      120
+ For x=        4 -----  The factorial=       24
+ For x=        3 -----  The factorial=        6
+ For x=       20 -----  The factorial= 2432902008176640000</pre></div>
+      <p class="note">2020 version (one number, while check): <code>while a&lt;=0 || round(a)~=a, disp('Please enter a positive integer number'), a=input('Enter the number'); end</code></p>
+      <pre class="mermaid">flowchart TD
+  S([Start]) --> I[/Input x/]
+  I --> D{All x positive integers?}
+  D -- no --> W[/Warning, input x again/] --> D2{All valid?}
+  D2 -- no --> E[/Program ended/] --> Z([End])
+  D2 -- yes --> K
+  D -- yes --> K[k = 1]
+  K --> L{k ≤ length of x?}
+  L -- yes --> F[fac = 1, multiply 1·2·…·x of k] --> P[/Print x of k and fac/] --> K2[k = k + 1] --> L
+  L -- no --> Z</pre>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li><code>any(...)</code> is true if at least one element breaks the rule.</li><li><code>x&lt;=0 | round(x)~=x</code>: not positive, or not a whole number.</li><li>Outer loop over the entered values; inner loop multiplies 1 × 2 × … × x(k).</li><li><code>fac=1</code> must be reset for every value, inside the outer loop.</li></ol></div>
+<div class="answer">5! = 120, 4! = 24, 3! = 6, 20! = 2 432 902 008 176 640 000 (verified)</div>
+  </article>
+<article class="card" id="s13">
+    <div class="q">
+      <div class="src"><span class="chip must">MUST DO</span><span class="chip hot">Mid 2020 Q4</span><span class="chip">Final 2021 Q5 · Final 2023 b</span><span class="chip">Sheet 7 Q6</span></div>
+      <figure class="orig"><figcaption>As it appears in the exam (Mid 2020 Q4)</figcaption><img src="guide-img/c12a.jpg" alt="Mid 2020 Q4 question line" loading="lazy"><img src="guide-img/c12b.jpg" alt="Mid 2020 Q4 flowchart" loading="lazy"></figure>
+      <h3>7.4 · Execute the flowchart by hand for k = 2 … 6</h3>
+      <p>Flowchart: y(1) = 1, y(2) = −1/2; total(1) = y(1), total(2) = total(1) + y(2); k = 3; while |total(k) − total(k−1)| &gt; 0.001: y(k) = (−1)<sup>k+1</sup>/k, total(k) = total(k−1) + y(k), k = k + 1. Print the last element, the sum and ln 2; plot.</p>
+      <p class="find">the values at each k, what the flowchart does, a matrix-form program</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+      <div class="tbl" style="font-family:var(--f-hand);font-size:1rem;background:transparent"><table>
+        <thead><tr><th>k</th><th>y(k)</th><th>total(k)</th><th>|total(k) − total(k−1)|</th><th>&gt; 0.001?</th></tr></thead><tbody>
+        <tr><td>1</td><td>1</td><td>1</td><td>—</td><td>—</td></tr>
+        <tr><td>2</td><td>−1/2</td><td>0.5000</td><td>0.5000</td><td>yes</td></tr>
+        <tr><td>3</td><td>1/3</td><td>0.8333</td><td>0.3333</td><td>yes</td></tr>
+        <tr><td>4</td><td>−1/4</td><td>0.5833</td><td>0.2500</td><td>yes</td></tr>
+        <tr><td>5</td><td>1/5</td><td>0.7833</td><td>0.2000</td><td>yes</td></tr>
+        <tr><td>6</td><td>−1/6</td><td>0.6167</td><td>0.1667</td><td>yes</td></tr>
+      </tbody></table></div>
+      <p>It is the <span class="u2">alternating harmonic series</span>, which converges to ln 2 = 0.6931. It stops when 1/k ≤ 0.001, near k = 1000.</p>
+      <span class="mn">2</span>
+<pre class="hand">%% matrix form only (no loop) - the doctor's answer
+k=1:1000;
+y=(-1).^(k+1)./k;
+total=cumsum(y);
+fprintf('final element = %f, sum = %f, ln(2) = %f\n',y(end),total(end),log(2))
+plot(k,total), title('Using matrix'), grid on</pre>
+      <div class="plot sm" id="pl-alt"></div><p class="swipe">Swipe sideways →</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li>Trace: write k, y(k), total(k) and the check for each pass, as in the table.</li><li>Matrix form: <code>k=1:1000</code> makes all k at once; <code>.^</code> and <code>./</code> make every term; <code>cumsum</code> gives the running totals.</li><li>The sums swing above and below ln 2 and close in on it.</li></ol></div>
+<div class="answer">totals 1, 0.5, 0.8333, 0.5833, 0.7833, 0.6167 …; the sum tends to ln 2 = 0.6931 (0.6936 when the loop stops)</div>
+  </article>
+<article class="card" id="n18">
+<div class="q"><div class="src"><span class="chip">Sheet 7 Q6</span><span class="chip">Final 2023 Q2b</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 7 Q6, left flowchart)</figcaption><img src="guide-img/n_s7q6.jpg" alt="As it appears in the sheet (Sheet 7 Q6, left flowchart)" loading="lazy"></figure>
+<h3>7.5 · Read a while-loop flowchart: fact2</h3>
+<p>Implement the left flowchart as a function and say what it does.</p>
+<p class="find">the function and its purpose</p>
+</div>
+<div class="paper"><span class="mn">7.5</span>
+<pre class="hand">function output=fact2(x)
+if length(x)&gt;1                        <span class="c">% x is not a scalar</span>
+   disp('Input must be a positive integer')
+   output=[];
+else
+   a=1;  k=1;
+   while k&lt;x
+      k=k+1;
+      a=a*k;
+   end
+   output=a;
+end
+end</pre><div class="tbl"><table><thead><tr><th>pass</th><th>k</th><th>a</th><th>check while k &lt; x</th></tr></thead><tbody><tr><td><span class="mono">start</span></td><td><span class="mono">1</span></td><td><span class="mono">1</span></td><td><span class="mono">—</span></td></tr><tr><td><span class="mono">1</span></td><td><span class="mono">2</span></td><td><span class="mono">2</span></td><td><span class="mono">2 &lt; 5 yes</span></td></tr><tr><td><span class="mono">2</span></td><td><span class="mono">3</span></td><td><span class="mono">6</span></td><td><span class="mono">3 &lt; 5 yes</span></td></tr><tr><td><span class="mono">3</span></td><td><span class="mono">4</span></td><td><span class="mono">24</span></td><td><span class="mono">4 &lt; 5 yes</span></td></tr><tr><td><span class="mono">4</span></td><td><span class="mono">5</span></td><td><span class="mono">120</span></td><td><span class="mono">5 &lt; 5 no → stop</span></td></tr></tbody></table></div>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li>A function because the flowchart starts with "function output = fact2(x)".</li><li>"Check to see if x is a scalar" → <code>length(x)&gt;1</code> means it is a list, not one number.</li><li>Trace it with x = 5 as in the table.</li></ol></div>
+<div class="answer">fact2(5) = 120: the flowchart computes the factorial of x (the right flowchart is card 7.4).</div>
+</article>
+<article class="card" id="n19">
+<div class="q"><div class="src"><span class="chip">Sheet 7 Q7</span></div>
+<figure class="orig"><figcaption>As it appears in the sheet (Sheet 7 Q7)</figcaption><img src="guide-img/n_s7q7.jpg" alt="As it appears in the sheet (Sheet 7 Q7)" loading="lazy"></figure>
+<h3>7.6 · A loop with two ways out: break or 50 iterations</h3>
+<p>Sum 1 − 2 + 3 − 4 + … ; stop if two adjacent sums differ by less than 0.001, or after 50 iterations. Plot the sum.</p>
+<p class="find">the program, the result, the plot</p>
+</div>
+<div class="paper"><span class="mn">7.6</span>
+<pre class="hand">clear all, clc
+total(1)=1;  n=1;
+while n&lt;50
+   n=n+1;
+   total(n)=total(n-1)+(-1)^(n+1)*n;
+   if abs(total(n)-total(n-1))&lt;0.001
+      break
+   end
+end
+plot(1:n,total,'-o'), grid on
+title('Cumulative sum of 1-2+3-4+...')
+xlabel('iteration'), ylabel('cumulative sum')
+fprintf('After %d iterations the sum = %d\n',n,total(n))</pre><div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>After 50 iterations the sum = -25</pre></div><div class="plot sm" id="pl-div"></div><p class="swipe">Swipe sideways →</p>
+</div>
+<div class="lbl"><span class="bt">Line by line</span><ol><li><code>while n&lt;50</code> is the safety limit.</li><li><code>break</code> is the convergence exit; here it never happens.</li><li><code>(-1)^(n+1)*n</code> gives +1, −2, +3, −4 …</li></ol></div>
+<div class="answer">The series diverges: the sums go 1, −1, 2, −2, 3, −3 … The difference between neighbours is n, never below 0.001, so the 50-iteration limit stops it at −25.</div>
+</article>
+<article class="card" id="s14">
+    <div class="q">
+      <div class="src"><span class="chip">Sheet 7 Q9–10</span><span class="chip">Sheet 2 Q6–7 · Sheet 3 Q10</span></div>
+      <figure class="orig"><figcaption>As it appears in the sheet (Sheet 7 Q10)</figcaption><img src="guide-img/c16.jpg" alt="Sheet 7 Q10 with tables" loading="lazy"></figure>
+      <h3>7.7 · Maximum power point of a PV panel with loops</h3>
+      <p>Read the I-V table for each irradiation, compute P = V·I, and find the maximum power and its operating point with an outer while loop (irradiations) and an inner for loop (points).</p>
+      <p class="find">P<sub>max</sub>, V and I at MPP for 200, 600, 1000 W/m²</p>
+    </div>
+    <div class="paper">
+      <span class="mn">1</span>
+<pre class="hand">V=[V1;V2;V3];  I=[I1;I2;I3];      <span class="c">% each row = one irradiation (21 points)</span>
+k=1;
+while k&lt;=3
+   Pmax(k)=0;
+   for n=1:length(V1)
+      P(k,n)=V(k,n)*I(k,n);
+      if P(k,n)&gt;Pmax(k)
+         Pmax(k)=P(k,n);  V_op(k)=V(k,n);  I_op(k)=I(k,n);
+      end
+   end
+   fprintf('Pmax_%d = %8.2f at V = %6.2f & I = %6.2f\n',k,Pmax(k),V_op(k),I_op(k))
+   k=k+1;
+end
+<span class="c">%% matrix form:  P=V.*I;  [Pmax,n]=max(P,[],2)</span></pre>
+      <div class="screen"><span class="sh">Output: write this on paper under your code</span><pre>Pmax_1 =    33.00 at V =  33.00 & I =   1.00
+Pmax_2 =   115.60 at V =  34.00 & I =   3.40
+Pmax_3 =   200.60 at V =  34.00 & I =   5.90</pre></div>
+      <div class="plot sm" id="pl-mpp"></div><p class="swipe">Swipe sideways →</p>
+    </div>
+    <div class="lbl"><span class="bt">Line by line</span><ol><li><code>V=[V1;V2;V3]</code>: one row per irradiation.</li><li>Outer while loop: k = 1, 2, 3 (irradiations). Inner for loop: every point on that curve.</li><li>Each time a bigger P is found, remember P, V and I.</li><li>Print <code>V_op(k)</code>, <code>I_op(k)</code>, not <code>V1(1)</code> (that was the slide's mistake).</li></ol></div>
+<div class="answer">200 W/m²: 33.0 W at 33 V, 1.0 A · 600 W/m²: 115.6 W at 34 V, 3.4 A · 1000 W/m²: 200.6 W at 34 V, 5.9 A. Single-panel table (Sheet 2 Q6): 0.4934 W at 4.934 V, 0.10 A.</div>
+  </article>
+<div class="box tip"><span class="bt">Sheet 7 Q11–12: same circuit as card 2.3, with loops</span><p>Q11 is card 2.3 (for loop over E2). Q12 asks for E2 with a while loop (steps of 0.5 V assumed):</p>
+<pre class="code">z=[4 -2; -2 6];  E2=0;
+I=inv(z)*[6-E2; 2+E2];
+while abs(I(1))&gt;1e-6 &amp;&amp; E2&lt;16
+   E2=E2+0.5;
+   I=inv(z)*[6-E2; 2+E2];
+end
+fprintf('I_R1 = 0 at E2 = %.1f V\n',E2)      % 10.0 V</pre></div><div class="box mem"><span class="bt">Memorise</span><div class="tbl memt"><table><thead><tr><th>Write this</th><th>It means</th><th>Example</th></tr></thead><tbody><tr><td><span class="mono">for k=1:10 … end</span></td><td>Repeat 10 times, k = 1, 2, …, 10</td><td></td></tr><tr><td><span class="mono">while cond … end</span></td><td>Repeat while cond is true</td><td></td></tr><tr><td><span class="mono">count=0;  …  count=count+1;</span></td><td>Counter</td><td></td></tr><tr><td><span class="mono">s=0;  …  s=s+x(k);</span></td><td>Running sum</td><td></td></tr><tr><td><span class="mono">fac=1;  …  fac=fac*m;</span></td><td>Factorial</td><td></td></tr><tr><td><span class="mono">break   continue</span></td><td>Leave the loop / skip to the next pass</td><td></td></tr><tr><td><span class="mono">cumsum(y)</span></td><td>Running total in one line (matrix form, no loop)</td><td><span class="mono">cumsum([1 5 3]) → 1 6 9</span></td></tr></tbody></table></div></div>
+<div class="box trap"><span class="bt">Exam traps</span>
+    <ul class="tight">
+      <li>A while loop whose condition never changes runs forever.</li>
+      <li><code>while(x&lt;=0)</code> for input checking: ask again <b>inside</b> the loop.</li>
+      <li>MATLAB is case-sensitive: <code>While</code> (capital W, on a slide) is an error.</li>
+      <li>Check "integer": <code>round(a)~=a</code> or <code>rem(a,1)~=0</code>.</li>
+    </ul></div>
+<div class="navrow"><a href="#l6">← Lecture 6</a><a href="#quick">Final check →</a></div>
+</section>
+
+<section class="sec" id="quick">
+  <p class="eyebrow">Final check</p>
+  <h2>Theory quick-fire (the 1-mark side questions)</h2>
+  <div class="grid2">
+    <div class="box def"><span class="bt">Matrix or loop, which is better?</span><p>Matrix (vectorised) form: shorter and much faster to run. Loops: easier when each step needs the previous one, or to stop early.</p></div>
+    <div class="box def"><span class="bt">Script vs function M-file</span><p>A script shares the workspace and runs top to bottom. A function starts with <code>function</code>, has private variables and inputs/outputs, and its file name must equal the function name.</p></div>
+    <div class="box def"><span class="bt">More or fewer series terms</span><p>Doubling the terms improves accuracy, most of all for large x. Halving gives large errors away from 0. The built-in sin is accurate to machine precision.</p></div>
+    <div class="box def"><span class="bt">Odd harmonics</span><p>A fundamental plus odd harmonics gives half-wave symmetry: v(t + T/2) = −v(t). Even harmonics break it; a dc term shifts the wave up.</p></div>
+    <div class="box def"><span class="bt">rand vs randn</span><p><code>rand</code>: uniform between 0 and 1. <code>randn</code>: normal, mean 0, variance 1. Range a–b: <code>a+(b-a)*rand(m,n)</code>.</p></div>
+    <div class="box def"><span class="bt">&amp; vs &amp;&amp;</span><p><code>&amp;</code> and <code>|</code> work element by element on arrays. <code>&amp;&amp;</code> and <code>||</code> work on single values and stop early (short circuit); use them in if / while.</p></div>
+    <div class="box def"><span class="bt">break / continue / return</span><p>break leaves the loop; continue jumps to the next pass; return ends the whole script or function.</p></div>
+    <div class="box def"><span class="bt">disp vs fprintf</span><p>disp prints a value or text as-is. fprintf controls width, decimals and line breaks and repeats its format for a matrix.</p></div>
+    <div class="box def"><span class="bt">' vs .'</span><p><code>'</code> transposes and conjugates; <code>.'</code> only transposes. They are the same for real numbers.</p></div>
+    <div class="box def"><span class="bt">Variable names</span><p>Start with a letter; letters, digits, underscore; case-sensitive; no keywords (<code>if</code>, <code>end</code>…). Allowed: test, Test, my_book, group_one, zzaAbc, Log. Not allowed: if, my-book, 1stgroup, names with ? or #. "sin" is allowed but hides the built-in function. Check with <code>isvarname</code>, <code>iskeyword</code>, <code>which</code>.</p></div>
+    <div class="box def"><span class="bt">Desktop windows</span><p>Command Window (type and run), Command History (past commands), Workspace (variables in memory), Current Folder (files MATLAB can see), Editor (M-files), Document/Variable editor (spreadsheet view). <code>diary</code> saves a session to a file.</p></div>
+    <div class="box def"><span class="bt">Flowchart shapes</span><p>Oval: start / end. Parallelogram: input / output. Diamond: decision. Rectangle: calculation.</p></div>
+  </div>
+</section>
+<section class="sec" id="audit">
+  <p class="eyebrow">Final check</p>
+  <h2>Verification audit: mistakes found in your material</h2>
+  <p>MATLAB and Octave aren't installed on this computer, so I recomputed every number in this guide by reproducing MATLAB's behaviour in Python/numpy: matrix statistics, mesh and nodal solutions, 3-phase sweeps, harmonic currents and powers, series sums, factorials, the flowchart trace, PV maximum power points, the feeder results, relay times and two-bus powers. Everything in the answer cards matches. The doctor's model answers check out except for the items below.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Where</th><th>Problem</th><th>Correct version</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Mid 2020 Q2 model answer</td><td><code>[a,b]=find(I1==0)</code> compares a computed current with exactly 0. Recomputing gives I1 = 2.2×10⁻¹⁶ at E2 = 10 V, not 0, so the program can wrongly print "none of the values…"</td><td><code>b=find(abs(I1)&lt;1e-6); if isempty(b) …</code> (card 2.3)</td></tr>
+      <tr><td>2</td><td>Lecture 7, Sheet 7 Q10 output</td><td>Pmax values are right but the printed operating points are wrong: "V = 0.00 &amp; I = 1.20", "V = 5.00 &amp; I = 3.70", "V = 10.00 &amp; I = 6.40". The fprintf prints <code>V1(1), I1(1)</code> instead of <code>V_op(k), I_op(k)</code></td><td>33 W at 33 V, 1.0 A; 115.6 W at 34 V, 3.4 A; 200.6 W at 34 V, 5.9 A (card 7.7)</td></tr>
+      <tr><td>3</td><td>Lecture 3, Sheet 3 Q8 solution</td><td>Code uses <code>25*sin(2*t-pi/2)</code>, but the question says 20 sin(2ωt − π/2). The comment also says "32 mA", while the question has no unit</td><td><code>i=32+50*sin(t)+20*sin(2*t-pi/2)</code></td></tr>
+      <tr><td>4</td><td>Lecture 4/5, Sheet 4 Q3 (fun4Q3c)</td><td><code>for n=0:1:20</code> adds 21 terms, not 20; <code>output=0</code> has no semicolon, so it prints a stray "output = 0"</td><td><code>output=0; for n=0:19</code></td></tr>
+      <tr><td>5</td><td>Lecture 7, while-loop slide</td><td><code>While(a&lt;10)</code> with a capital W is an error (MATLAB is case-sensitive)</td><td><code>while a&lt;10</code></td></tr>
+      <tr><td>6</td><td>Mid 2020 Q4 model answer</td><td>Format <code>'%2.8f% \n'</code> has a stray <code>%</code>. The loop ends at k = 1001 in floating point (|1/1000| is not &gt; 0.001), not exactly at 1000</td><td><code>'%2.8f \n'</code></td></tr>
+      <tr><td>7</td><td>Sheet 1 Q19 solution page vs Lecture 2</td><td>The sheet's code uses <code>I=S/(3*220)</code> (÷660); the lecture uses <code>S/(sqrt(3)*380)</code> (÷658.2). CB rating 4115 A vs 4126 A</td><td>Use the lecture's √3·380 version</td></tr>
+      <tr><td>8</td><td>Lecture 6, OR-gate / decoder code</td><td>Copy-paste prompts: <code>c=input('The value of variable a=')</code> asks for "a" while reading c. Messages say "ended" where the sheet says "breaked"</td><td>Match each prompt to its variable</td></tr>
+      <tr><td>9</td><td>Lecture 1, rounding table</td><td>The function is written "fx(x)"; it is <code>fix(x)</code></td><td><code>fix(8.6)</code> → 8</td></tr>
+      <tr><td>10</td><td>Lecture 5, fprintf slide</td><td>Text says "the value of cows" (left over from the textbook); the variable is <code>ampere</code></td><td>wording only</td></tr>
+      <tr><td>11</td><td>Mid 16-11-2025 Q2</td><td>"Demand factor" is computed from the simultaneous and individual maxima, which is the diversity / coincidence factor</td><td>Write the formula you use (card 2.8 note)</td></tr>
+    </tbody></table></div>
+  <div class="box tip"><span class="bt">What I could not verify</span><ul class="tight"><li>I couldn't run the MATLAB code itself (no MATLAB here). The numbers were recomputed independently, and the code follows the doctor's own working solutions line by line.</li><li>Plots involving <code>rand</code> (houses, voltage fluctuation) change on every run; only their method is given.</li><li>The faded limits in Nov 2025 Q5 (10 W and 50 W) are read from a low-contrast scan.</li></ul></div>
+  <div class="navrow"><a href="#l7">← Lecture 7</a><a href="#now">Back to the plan ↑</a></div>
+</section>
+
+</main>
+<button class="btn totop" id="toTop" type="button" hidden>↑ Top</button>
+<script>
+(function(){
+  var root=document.documentElement, KEY='ele222-theme', modes=['auto','light','dark'];
+  function get(){try{return localStorage.getItem(KEY)||'auto'}catch(e){return 'auto'}}
+  function apply(m){if(m==='auto')root.removeAttribute('data-theme');else root.setAttribute('data-theme',m);
+    document.getElementById('themeBtn').textContent='Theme: '+m.charAt(0).toUpperCase()+m.slice(1)}
+  var cur=get();apply(cur);
+  document.getElementById('themeBtn').addEventListener('click',function(){cur=modes[(modes.indexOf(cur)+1)%3];apply(cur);try{localStorage.setItem(KEY,cur)}catch(e){}});
+  // contents
+  var list=document.getElementById('tocList');
+  document.querySelectorAll('main section.sec').forEach(function(s){
+    var h=s.querySelector('h2,h1');if(!h)return;var li=document.createElement('li');
+    li.innerHTML='<a href="#'+s.id+'"></a>';li.firstChild.textContent=(s.querySelector('.eyebrow')?s.querySelector('.eyebrow').textContent.replace(/·.*$/,'').trim()+' · ':'')+h.textContent;list.appendChild(li);
+    s.querySelectorAll('article.card[id]').forEach(function(c){var l2=document.createElement('li');l2.className='sub';l2.innerHTML='<a href="#'+c.id+'"></a>';l2.firstChild.textContent=c.querySelector('h3').textContent;list.appendChild(l2)});
+  });
+  var dr=document.getElementById('drawer'),tb=document.getElementById('tocBtn');
+  function close(){dr.hidden=true;tb.setAttribute('aria-expanded','false')}
+  tb.addEventListener('click',function(){dr.hidden=!dr.hidden;tb.setAttribute('aria-expanded',String(!dr.hidden))});
+  dr.addEventListener('click',function(e){if(e.target===dr||e.target.tagName==='A')close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  var prog=document.getElementById('prog'),tt=document.getElementById('toTop');
+  function onScroll(){var h=document.documentElement;var p=h.scrollTop/(h.scrollHeight-h.clientHeight||1);prog.style.width=(p*100).toFixed(1)+'%';tt.hidden=h.scrollTop<900}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  tt.addEventListener('click',function(){window.scrollTo(0,0)});
+})();
+/* ---------- to-scale sketch plots on graph paper ---------- */
+function drawPlot(id,o){
+  var el=document.getElementById(id);if(!el)return;
+  var W=o.w||640,H=o.h||300,L=56,R=16,T=18,B=40,pw=W-L-R,ph=H-T-B;
+  function X(v){return L+(v-o.x0)/(o.x1-o.x0)*pw}function Y(v){return T+(o.y1-v)/(o.y1-o.y0)*ph}
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+(o.label||'plot')+'" style="font-family:var(--f-hand);font-size:13px">';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="var(--paper)"/>';
+  // fine grid
+  var gx=(o.x1-o.x0)/((o.gridx||20)),gy=(o.y1-o.y0)/((o.gridy||10));
+  for(var gxv=o.x0;gxv<=o.x1+1e-9;gxv+=gx)s+='<line x1="'+X(gxv)+'" y1="'+T+'" x2="'+X(gxv)+'" y2="'+(T+ph)+'" stroke="var(--rule)" stroke-width="1"/>';
+  for(var gyv=o.y0;gyv<=o.y1+1e-9;gyv+=gy)s+='<line x1="'+L+'" y1="'+Y(gyv)+'" x2="'+(L+pw)+'" y2="'+Y(gyv)+'" stroke="var(--rule)" stroke-width="1"/>';
+  // axes
+  var y0=(o.y0<=0&&o.y1>=0)?0:o.y0;
+  s+='<line x1="'+L+'" y1="'+Y(y0)+'" x2="'+(L+pw)+'" y2="'+Y(y0)+'" stroke="var(--pencil)" stroke-width="1.4"/>';
+  s+='<line x1="'+L+'" y1="'+T+'" x2="'+L+'" y2="'+(T+ph)+'" stroke="var(--pencil)" stroke-width="1.4"/>';
+  (o.xt||[]).forEach(function(t){var v=t[0],lab=t[1];s+='<line x1="'+X(v)+'" y1="'+(T+ph)+'" x2="'+X(v)+'" y2="'+(T+ph+5)+'" stroke="var(--pencil)"/><text x="'+X(v)+'" y="'+(T+ph+18)+'" text-anchor="middle" fill="var(--pencil)">'+lab+'</text>'});
+  (o.yt||[]).forEach(function(t){var v=t[0],lab=t[1];s+='<line x1="'+(L-5)+'" y1="'+Y(v)+'" x2="'+L+'" y2="'+Y(v)+'" stroke="var(--pencil)"/><text x="'+(L-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" fill="var(--pencil)">'+lab+'</text>'});
+  if(o.xl)s+='<text x="'+(L+pw)+'" y="'+(H-4)+'" text-anchor="end" fill="var(--pencil)">'+o.xl+'</text>';
+  if(o.yl)s+='<text x="10" y="'+(T+ph/2)+'" transform="rotate(-90 10 '+(T+ph/2)+')" text-anchor="middle" fill="var(--pencil)">'+o.yl+'</text>';
+  var cols=['var(--ink)','var(--err)','var(--tip)','var(--mem)','var(--trap)'];
+  (o.series||[]).forEach(function(se,i){
+    var c=se.color||cols[i%cols.length],d='';
+    if(se.bars){var bw=se.bw||0.6;se.bars.forEach(function(b){var x=b[0],v=b[1];s+='<rect x="'+X(x-bw/2)+'" y="'+Y(Math.max(v,0))+'" width="'+(X(x+bw/2)-X(x-bw/2))+'" height="'+Math.abs(Y(v)-Y(0))+'" fill="'+c+'" fill-opacity="0.22" stroke="'+c+'" stroke-width="1.6"/>'+(se.lab?'<text x="'+X(x)+'" y="'+(Y(v)-6)+'" text-anchor="middle" fill="'+c+'">'+(b[2]||v)+'</text>':'')});return}
+    if(se.pts){se.pts.forEach(function(p){
+      var m=se.mark||'o';if(m==='o')s+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="6" fill="var(--paper)" stroke="'+c+'" stroke-width="1.8"/>';
+      if(m==='o+'){s+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="8" fill="var(--paper)" stroke="'+c+'" stroke-width="1.8"/><path d="M'+(X(p[0])-8)+' '+Y(p[1])+'h16M'+X(p[0])+' '+(Y(p[1])-8)+'v16" stroke="'+c+'" stroke-width="1.4"/>'}
+      if(p[2])s+='<text x="'+(X(p[0])+(p[3]||10))+'" y="'+(Y(p[1])+(p[4]||5))+'" fill="'+c+'" font-weight="700">'+p[2]+'</text>'});}
+    if(se.f||se.xy){var n=se.n||400,pts=[];
+      if(se.xy)pts=se.xy;else for(var k=0;k<=n;k++){var xv=o.x0+(o.x1-o.x0)*k/n;pts.push([xv,se.f(xv)])}
+      pts.forEach(function(p,k){d+=(k?'L':'M')+X(p[0]).toFixed(1)+' '+Y(Math.max(o.y0,Math.min(o.y1,p[1]))).toFixed(1)});
+      s+='<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="'+(se.wd||1.9)+'" stroke-linejoin="round" stroke-linecap="round"'+(se.dash?' stroke-dasharray="'+se.dash+'"':'')+'/>';
+      if(se.dots)pts.forEach(function(p){s+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="3.2" fill="'+c+'"/>'});}
+    if(se.name){var ly=T+14+i*17;s+='<line x1="'+(L+pw-128)+'" y1="'+(ly-4)+'" x2="'+(L+pw-104)+'" y2="'+(ly-4)+'" stroke="'+c+'" stroke-width="2"'+(se.dash?' stroke-dasharray="'+se.dash+'"':'')+'/><text x="'+(L+pw-98)+'" y="'+ly+'" fill="'+c+'">'+se.name+'</text>'}
+  });
+  (o.notes||[]).forEach(function(nt){s+='<text x="'+X(nt[0])+'" y="'+Y(nt[1])+'" fill="var(--err)" font-weight="700" text-anchor="'+(nt[3]||'start')+'">'+nt[2]+'</text>'});
+  if(o.title)s+='<text x="'+(L+pw/2)+'" y="13" text-anchor="middle" fill="var(--pencil)" font-weight="700">'+o.title+'</text>';
+  s+='</svg>';el.innerHTML=s;
+}
+</script>
+<script>
+(function(){
+var PI=Math.PI, pis=[[0,'0'],[PI/2,'π/2'],[PI,'π'],[3*PI/2,'3π/2'],[2*PI,'2π']];
+drawPlot('pl-ploss',{label:'PlossR1 against E2',x0:0,x1:20,y0:0,y1:9,gridx:20,gridy:9,xt:[[0,0],[5,5],[10,10],[15,15],[20,20]],yt:[[0,0],[2,2],[4,4],[6,6],[8,8]],xl:'E2 (V)',yl:'PlossR1 (W)',
+  series:[{f:function(e){return 2*Math.pow(2-0.2*e,2)},name:'2(2−0.2E2)²'},{pts:[[0,8,'8 W',8,-6],[10,0,'0 W at 10 V',8,-8],[20,8,'8 W',-40,-6]],mark:'o'}]});
+drawPlot('pl-ibb',{label:'IbB magnitude against frequency',x0:25,x1:250,y0:0,y1:10,gridx:9,gridy:10,xt:[[25,25],[100,100],[175,175],[250,250]],yt:[[0,0],[2,2],[4,4],[6,6],[8,8],[10,10]],xl:'f (Hz)',yl:'|IbB| (A)',
+  series:[{f:function(f){var x=2*PI*f*11.6e-3;return 120/Math.sqrt(144+x*x)},name:'|IbB|'},{pts:[[25,9.887,'9.89 A',6,-8],[100,8.547,'8.55 A',6,-8],[250,5.500,'5.50 A',-52,-10]],mark:'o'}]});
+drawPlot('pl-houses',{label:'house powers bar chart',x0:0.4,x1:3.6,y0:0,y1:14,gridx:16,gridy:14,xt:[[1,'House 1'],[2,'House 2'],[3,'House 3']],yt:[[0,0],[4,4],[8,8],[12,12]],yl:'P (kW)',
+  series:[{bars:[[1,5],[2,4.5],[3,6.2]],lab:true},{xy:[[0.5,12],[3.5,12]],dash:'7 5',name:'P_sim = 12 kW'}]});
+drawPlot('pl-odd',{label:'fundamental plus third harmonic',x0:0,x1:2*PI,y0:-130,y1:130,gridx:16,gridy:13,xt:pis,yt:[[-100,-100],[-50,-50],[0,0],[50,50],[100,100]],xl:'ωt (rad)',yl:'v (V)',
+  series:[{f:function(t){return 100*Math.sin(t)},dash:'6 5',name:'100 sin ωt'},{f:function(t){return 30*Math.sin(3*t)},dash:'2 4',name:'30 sin 3ωt'},{f:function(t){return 100*Math.sin(t)+30*Math.sin(3*t)},wd:2.6,name:'va (sum)'}]});
+var rl=document.getElementById('pl-rlc');
+if(rl){rl.innerHTML='<div id="rlc0"></div><div id="rlc1"></div><div id="rlc2"></div><div id="rlc3"></div>';
+  var XL=2*PI*1000*7.96e-3, XC=1/(2*PI*1000*25e-6), xt4=[[0,'0'],[PI,'π'],[2*PI,'2π'],[3*PI,'3π'],[4*PI,'4π']];
+  var v=function(t){return 100*Math.sin(t)+30*Math.sin(3*t+PI/3)+10*Math.sin(5*t-PI/6)};
+  var cfg=function(title,y,f,yt,dash){return {label:title,h:200,x0:0,x1:4*PI,y0:-y,y1:y,gridx:16,gridy:8,xt:xt4,yt:yt,title:title,series:[{f:f,n:600,dash:dash}]}};
+  drawPlot('rlc0',cfg('applied voltage v (V)',140,v,[[-100,-100],[0,0],[100,100]]));
+  drawPlot('rlc1',cfg('(a) iR (A), same shape as v',3.6,function(t){return v(t)/40},[[-3,-3],[0,0],[3,3]],'8 4'));
+  drawPlot('rlc2',cfg('(b) iL (A), smoother: 5th harmonic almost gone',2.4,function(t){return 100/XL*Math.sin(t-PI/2)+30/(3*XL)*Math.sin(3*t+PI/3-PI/2)+10/(5*XL)*Math.sin(5*t-PI/6-PI/2)},[[-2,-2],[0,0],[2,2]],'8 4'));
+  drawPlot('rlc3',cfg('(c) iC (A), very distorted: harmonics amplified',36,function(t){return 100/XC*Math.sin(t+PI/2)+90/XC*Math.sin(3*t+PI/3+PI/2)+50/XC*Math.sin(5*t-PI/6+PI/2)},[[-30,-30],[0,0],[30,30]],'8 4'));}
+drawPlot('pl-tline',{label:'conductor layout',w:520,h:340,x0:-4,x1:13,y0:-3,y1:15,gridx:17,gridy:18,xt:[[0,0],[9,9]],yt:[[0,0],[6,6],[12,12]],xl:'x (m)',yl:'y (m)',
+  series:[{pts:[[0,12,'a'],[0,6,'b'],[0,0,'c'],[9,12,'d',-26],[9,6,'e',-26]],mark:'o+'}],notes:[[4.5,13.3,'9 m','middle'],[-2.2,9,'6 m','middle'],[-2.2,3,'6 m','middle'],[11,9,'6 m','middle'],[0,-2.2,'A','middle'],[9,-2.2,'B','middle']]});
+drawPlot('pl-pv',{label:'power against voltage',x0:0,x1:20,y0:0,y1:55,gridx:20,gridy:11,xt:[[0,0],[5,5],[10,10],[15,15],[20,20]],yt:[[0,0],[10,10],[20,20],[30,30],[40,40],[50,50]],xl:'Voltage (V)',yl:'Power (W)',
+  series:[{xy:(function(){var a=[];for(var V=0;V<=20;V++)a.push([V,V*V/10]);return a})(),dots:true,name:'P = V²/R, R = 10 Ω'},{xy:[[0,10],[20,10]],dash:'4 4',color:'var(--tip)'},{xy:[[0,50],[20,50]],dash:'4 4',color:'var(--err)'}],notes:[[0.5,11.5,'10 W: Low below','start'],[19.5,41,'Pmax = 40 W → Moderate','end']]});
+drawPlot('pl-relay',{label:'relay curves',x0:300,x1:3000,y0:0,y1:5.5,gridx:9,gridy:11,xt:[[300,300],[1200,1200],[2100,2100],[3000,3000]],yt:[[0,0],[1,1],[2,2],[3,3],[4,4],[5,5]],xl:'I fault (A)',yl:'t (s)',
+  series:[{f:function(I){return 0.14*0.3/(Math.pow(I/200,0.02)-1)},name:'Relay A, TMS 0.3'},{f:function(I){return 0.14*0.2/(Math.pow(I/200,0.02)-1)},dash:'8 4',name:'Relay B, TMS 0.2'},{f:function(I){return 0.14*0.1/(Math.pow(I/200,0.02)-1)},dash:'2 4',name:'Relay C, TMS 0.1'}]});
+drawPlot('pl-alt',{label:'cumulative alternating harmonic sum',x0:0,x1:30,y0:0.4,y1:1.05,gridx:15,gridy:13,xt:[[1,1],[5,5],[10,10],[15,15],[20,20],[25,25],[30,30]],yt:[[0.5,'0.5'],[0.6931,'ln2'],[0.8,'0.8'],[1,'1']],xl:'k',yl:'total(k)',
+  series:[{xy:(function(){var a=[],s=0;for(var k=1;k<=30;k++){s+=Math.pow(-1,k+1)/k;a.push([k,s])}return a})(),dots:true,name:'total(k)'},{xy:[[0,Math.LN2],[30,Math.LN2]],dash:'6 5',name:'ln 2 = 0.6931'}]});
+var V1=[0,2.5,5,7.5,10,12.5,15,17.5,20,22.5,25,27.5,30,31,32,33,34,35,36,37,38],I1=[1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.19,1.17,1.12,1.08,1.05,1.03,1,0.95,0.9,0.7,0.4,0],
+    V2=[0,5,10,15,20,24,26,28,30,31,32,33,34,35,36,37,38,39,40,41,42],I2=[3.7,3.7,3.7,3.7,3.7,3.68,3.64,3.62,3.6,3.58,3.53,3.5,3.4,3.2,3.0,2.6,2.4,2.1,1,0.6,0],
+    V3=[0,5,10,15,20,25,28,30,31,32,33,34,35,36,37,38,39,40,41,42,43],I3=[6.4,6.4,6.4,6.4,6.4,6.4,6.35,6.3,6.2,6.1,6.0,5.9,5.6,5.4,4.1,3.6,3.1,2.8,2,0.4,0];
+function pv(V,I){return V.map(function(v,k){return [v,v*I[k]]})}
+drawPlot('pl-mpp',{label:'P-V curves',x0:0,x1:45,y0:0,y1:220,gridx:9,gridy:11,xt:[[0,0],[10,10],[20,20],[30,30],[40,40]],yt:[[0,0],[50,50],[100,100],[150,150],[200,200]],xl:'V (V)',yl:'P (W)',
+  series:[{xy:pv(V1,I1),name:'200 W/m²'},{xy:pv(V2,I2),dash:'8 4',name:'600 W/m²'},{xy:pv(V3,I3),dash:'2 4',name:'1000 W/m²'},{pts:[[33,33,'33 W',-20,-12],[34,115.6,'115.6 W',-64,-8],[34,200.6,'MPP 200.6 W',-110,-6]],mark:'o',color:'var(--err)'}]});
+})();
+
+drawPlot('pl-sincos',{label:'sin and cos',x0:-1,x1:2*Math.PI+1,y0:-1.5,y1:1.5,gridx:16,gridy:12,xt:[[0,'0'],[Math.PI,'π'],[2*Math.PI,'2π']],yt:[[-1,-1],[0,0],[1,1]],xl:'x',yl:'y',
+ series:[{xy:(function(){var a=[];for(var k=0;k<=200;k++){var x=2*Math.PI*k/200;a.push([x,Math.sin(x)])}return a})(),dash:'8 5',color:'var(--err)',name:'sin(x)  --r'},{xy:(function(){var a=[];for(var k=0;k<=200;k++){var x=2*Math.PI*k/200;a.push([x,Math.cos(x)])}return a})(),dash:'2 4',color:'var(--tip)',name:'cos(x)  :g'}]});
+(function(){var L=2.2e-3,C=0.044e-6,fs=1/Math.sqrt(L*C)/2/Math.PI,a=Math.log10(fs/100),b=Math.log10(fs*100);
+ function z(R){return function(u){var w=2*Math.PI*Math.pow(10,u);return Math.sqrt(R*R+Math.pow(w*L-1/(w*C),2))}}
+ drawPlot('pl-res',{label:'impedance against frequency',x0:a,x1:b,y0:0,y1:1600,gridx:16,gridy:8,xt:[[3,'1 kHz'],[4,'10 kHz'],[Math.log10(fs),'fs'],[5,'100 kHz'],[6,'1 MHz']],yt:[[0,0],[55,55],[400,400],[800,800],[1200,1200]],xl:'f (log scale)',yl:'|Z| (Ω)',
+ series:[{f:z(55),n:600,name:'R_G = 50 Ω'},{f:z(205),n:600,dash:'8 4',name:'R_G = 200 Ω'},{f:z(1005),n:600,dash:'2 4',name:'R_G = 1000 Ω'}]});})();
+drawPlot('pl-div',{label:'divergent cumulative sum',x0:0,x1:50,y0:-27,y1:27,gridx:10,gridy:9,xt:[[1,1],[10,10],[20,20],[30,30],[40,40],[50,50]],yt:[[-25,-25],[0,0],[25,25]],xl:'iteration n',yl:'sum',
+ series:[{xy:(function(){var a=[],s=0;for(var n=1;n<=50;n++){s+=(n%2?1:-1)*n;a.push([n,s])}return a})(),dots:true,name:'total(n)'}],notes:[[50,-25,'-25',"end"]]});
+</script>
+<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true});</script>
+</body>
+</html>
